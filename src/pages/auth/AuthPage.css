@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+body {
+    font-family: 'Nunito', sans-serif;
+}
+button {
+    font-family: 'Nunito', sans-serif;
+}
+
+p {
+    margin: 0;
+}
+.main-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-content: space-evenly;
+    margin: 50px auto auto;
+}
+.block-info {
+    width: 550px;
+}
+.info {
+    border-radius: 5px;
+    background-color: #ED502E;
+    padding: 50px;
+    color: #ffffff;
+}
+.button-block {
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 0px 0px 5px 5px;
+
+}
+.block-text {
+    width: 350px;
+}
+.p-text-one {
+    margin-bottom: 35px;
+}
+.p-text-two {
+    margin-top: 35px;
+}
+.p-text-error {
+    color: #ED502E;
+    font-size: 18px;
+    font-weight: bold;
+}
+.a-link {
+    background-color: #205798;
+    border: none;
+    padding: 10px 130px;
+    color: #ffffff;
+    font-size: 1.05rem;
+    margin-top: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.password-reset-button {
+    background-color: gainsboro;
+    border: none;
+    padding: 10px 80px;
+    color: #525252;
+    font-size: 1.05rem;
+    opacity: .7;
+    margin-top: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 320px;
+}
+
+.input {
+    padding: 15px 125px 15px 25px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #F4F5F9;
+}
+
+.spinner-border {
+    visibility: hidden;
+}
+
+.form-floating {
+    margin: 5px;
+}
