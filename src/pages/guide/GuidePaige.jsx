@@ -71,7 +71,7 @@ const GuidePaige = () => {
                 <li style={{margin: "0 auto", textAlign: "center"}}>{
                     directors.map(director =>
                         <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
-                            <GuideItem role="Дириктор" quide={director}/>
+                            <GuideItem role="Директор" quide={director}/>
                         </ul>
                     )
                 }</li>

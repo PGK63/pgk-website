@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import "./AuthPage.css";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../api/auth/AuthService";
+
 // import logo from 'src/resources/icons/pgk_icon.png';
 
 const AuthPage = () => {
     const navigate = useNavigate();
-
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [password, setPassword] = useState("")
@@ -35,35 +35,6 @@ const AuthPage = () => {
             })
         }
     }
-
-    function openImagePopupPasswordReset(width, height) {
-        const left = window.screen.width / 2 - width / 2
-        const top = window.screen.height / 2 - height / 2
-
-        const imageWindow = window.open('', '', `width=${"600px"}, height=${"600px"}, left=${left}, top=${top}`);
-        imageWindow.document.write(`
-        <body>
-        <p style="text-align: center">
-            <img src="https://api.cfif31.ru/pgk63/api/Image/telegram_bot_qrcode.png" width="400px"/>
-            <div style="display: flex; justify-content: center; align-items: center">
-        </p> 
-        <button style="background-color: gainsboro;
-        border: none;
-        padding: 10px 80px;
-        color: #525252;
-        font-size: 1.05rem;
-        opacity: .7;
-        margin-top: 15px;
-        border-radius: 15px;
-        cursor: pointer;
-        text-decoration: none;
-        width: 320px;
-        display: flex; justify-content: center; align-items: center;">Востановление пароля по почте</button> 
-        </body>`)
-
-        imageWindow.document.close()
-    }
-
     return (
         <div className="main">
             <div className="main-block">
@@ -113,7 +84,9 @@ const AuthPage = () => {
                                 <label htmlFor="password">Пароль</label>
                             </div>
                             <button id="auth_button" className="a-link" onClick={auth}>Войти</button>
-                            <button className="password-reset-button" onClick={openImagePopupPasswordReset}>Забыл пароль</button>
+                            <button className="password-reset-button" onClick={navigate("/password_reset")}>Забыл пароль</button>
+
+
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ import SearchPage from "./pages/search/SearchPage";
 import JournalsPage from "./pages/journal/JournalsPage";
 import JournalSubjectsPage from "./pages/journal/JournalSubjectsPage";
 import GuidePaige from "./pages/guide/GuidePaige";
+import PasswordReset from "./pages/passwordReset/PasswordReset";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
             <Route path="/journals" element={<JournalsPage/>}/>
             <Route path="/journals/:journalId/subjects" element={<JournalSubjectsPage/>}/>
             <Route path="/guide" element={<GuidePaige/>}/>
-
+            <Route path="/password_reset" element={<PasswordReset/>}/>
             <Route path="/search" element={<SearchPage/>}/>
         </Routes>
     </BrowserRouter>
