@@ -14,6 +14,7 @@ import JournalsPage from "./pages/journal/JournalsPage";
 import JournalSubjectsPage from "./pages/journal/JournalSubjectsPage";
 import GuidePaige from "./pages/guide/GuidePaige";
 import PasswordReset from "./pages/passwordReset/PasswordReset";
+import Registr from "./pages/registration/Registr";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             <Route path="/guide" element={<GuidePaige/>}/>
             <Route path="/password_reset" element={<PasswordReset/>}/>
             <Route path="/search" element={<SearchPage/>}/>
+            <Route path="/Registr" element={<Registr/>}/>
+
         </Routes>
     </BrowserRouter>
   );

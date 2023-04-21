@@ -85,6 +85,7 @@ const AuthPage = () => {
                             </div>
                             <button id="auth_button" className="a-link" onClick={auth}>Войти</button>
                             <button className="password-reset-button" onClick={navigate("/password_reset")}>Забыл пароль</button>
+                            <button className="password-reset-button" onClick={navigate("/Registr")}>новый пользователь</button>
 
 
                         </div>

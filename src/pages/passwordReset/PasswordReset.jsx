@@ -4,21 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 class PasswordReset extends Component {
     render() {
         return (
-            // <div>
-            //     <h1 style={{ textAlign: "center"}}> Восстановление через телеграм</h1>
-            //     <p style={{textAlign: "center"}}> <img  style={{ width: "300px", height: "300px"}} src={"https://api.cfif31.ru/pgk63/api/Image/telegram_bot_qrcode.png"}/> </p>
-            //     <h3 style={{textAlign: "center"}}> Отсканируйте qr код с помощью вашего телефона и выполните дальнейшие инструкции</h3>
-            //      <h1 style={{padding: "20px", textAlign: "center"}}>Ввостановление через электронную почту</h1>
-            //     <h3 style={{padding: "20px", textAlign: "center"}}>1. Введите вашу почту</h3>
-            //      <h3 style={{padding: "20px", textAlign: "center"}}>2. Нажмите кнопку "отправить код"</h3>
-            //        <h3 style={{padding: "20px", textAlign: "center"}}>3. Следуйте дальнейшим указаниям</h3>
-            //     <p style={{padding: "20px", textAlign: "center"}}><input  type="text"
-            //                                                               className="form-control"
-            //                                                               placeholder="Email" style={{width:"300px",margin: "auto",
-            //         display: "block"}} /></p>|
-            //     <button className="password-reset-button" style={{margin: "auto",
-            //         display: "block"}} > отправить писмо на почту</button>
-            // </div>
+
             <body >
             <div>
                 <div className="split left">
