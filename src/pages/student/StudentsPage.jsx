@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import StudentServide from '../../api/student/StudentService';
+import StudentService from '../../api/student/StudentService';
 import BaseButton from '../../components/BaseButton';
 import MainHeader from '../../components/mainHeader/MainHeader';
 import StudentItem from './components/StudentItem';
@@ -16,7 +16,7 @@ const StudentsPage = () => {
     const lastElement = useRef()
 
     const [fetchStudent, isStudentsLoading, studentsError] = useFetching(async () => {
-        const response = await StudentServide.getAll(page);
+        const response = await StudentService.getAll(page);
         if(response != null){
             setTotalPages(response.totalPages)
             setTotalCount(response.totalCount)

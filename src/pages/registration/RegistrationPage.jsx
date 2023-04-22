@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import "./Registr.css";
+import React from 'react';
+import "./RegistrationPage.css";
 import {Player} from "@lottiefiles/react-lottie-player";
-function Registr() {
+
+function RegistrationPage() {
     return (
-        <body>
+        <div>
         <Player
             autoplay={true}
             src="https://assets1.lottiefiles.com/packages/lf20_jcikwtux.json"
             style={{ height: '600px', width: '500px',padding :"5px"}}/>
         <div className="Cflex"><p style={{padding: "50px"}}>
-
 
             <h1>Регистрация</h1>
 
@@ -40,17 +40,8 @@ function Registr() {
             </div>
         </p>
         </div>
-        </body>
+        </div>
 
     );
 }
-// class Registr extends Component {
-//     render() {
-//         return (
-//
-//
-//
-//         );
-//     }
-// }
-export default Registr;
+export default RegistrationPage;

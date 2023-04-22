@@ -7,10 +7,13 @@ import BaseButton from "../../components/BaseButton";
 import ErrorText from "../../components/ErrorText";
 import Loading from "../../components/Loading";
 import JournalSubjectItem from "./components/JournalSubjectItem";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 
 const JournalSubjectsPage = () => {
+
+    const location = useLocation()
     const journalId = useParams().journalId
+    const groupId = new URLSearchParams(location.search).get('groupId')
     const [journalSubjects, setJournalSubjects] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
@@ -53,7 +56,11 @@ const JournalSubjectsPage = () => {
                 <li style={{margin: "0 auto", textAlign: "center"}}>{
                     journalSubjects.map(journalSubject =>
                         <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
-                            <JournalSubjectItem journalSubject={journalSubject} width="50rem"/>
+                            <JournalSubjectItem
+                                groupId={groupId}
+                                journalId={journalId}
+                                journalSubject={journalSubject} width="50rem"
+                            />
                         </ul>
                     )
                 }</li>

@@ -30,4 +30,23 @@ export default class JournalService {
         })
         return response.data
     }
+
+    static async getRowAll(journalSubjectId) {
+        const response = await axios.get("https://api.cfif31.ru/pgk63/api/Journal/Subject/Row", {
+            params: {
+                "pageSize": 2**15,
+                "pageNumber": 1,
+                "journalSubjectId": journalSubjectId
+            },
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
+    static EvaluationCorrection(evaluation) {
+        return evaluation.replace("HAS_", "")
+    }
 }

@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 const JournalItem = (preps) => {
     const navigate = useNavigate();
     const journal = preps.journal
+    const groupId = journal.group.id
 
     return (
         <div style={{
@@ -18,7 +19,7 @@ const JournalItem = (preps) => {
             justifyContent: "center",
             display: "flex",
             cursor: "pointer"
-        }} onClick={() => navigate("/journals/" + journal.id + "/subjects")}>
+        }} onClick={() => navigate("/journals/" + journal.id + `/subjects?groupId=${groupId}`)}>
             <div style={{
                 padding: "5px",
                 background: "white",

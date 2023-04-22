@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import GroupItem from "./GroupItem";
 import {useFetching} from "../../../hooks/useFetching";
-import StudentServide from "../../../api/student/StudentService";
+import StudentService from "../../../api/student/StudentService";
 import {useObserver} from "../../../hooks/useObserver";
 import BaseConstants from "../../../utils/BaseConstants";
 import StudentItem from "../../student/components/StudentItem";
@@ -16,7 +16,7 @@ const GroupStudents = (props) => {
     const lastElement = useRef()
 
     const [fetchStudent, isStudentsLoading, studentsError] = useFetching(async () => {
-        const response = await StudentServide.getAll(page, BaseConstants.PAGE_SIZE, props.groupId);
+        const response = await StudentService.getAll(page, BaseConstants.PAGE_SIZE, props.groupId);
         if(response != null){
             setTotalPages(response.totalPages)
             setTotalCount(response.totalCount)
