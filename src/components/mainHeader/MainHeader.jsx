@@ -90,7 +90,7 @@ const MainHeader = (preps) => {
                         <img className="nav-item-icon" src={require("../../resources/icons/journal.png")}/>
                         <span className="nav-item">Журнал</span>
                     </a></li>
-                    <li className="nav-li"><a href="#">
+                    <li className="nav-li"><a href={`/raportichka/list`}>
                         <img className="nav-item-icon" src={require("../../resources/icons/raportichka.png")}/>
                         <span className="nav-item">Рапортичка</span>
                     </a></li>

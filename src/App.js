@@ -17,6 +17,8 @@ import PasswordReset from "./pages/passwordReset/PasswordReset";
 import RegistrationPage from "./pages/registration/RegistrationPage";
 import JournalTablePage from "./pages/journal/JournalTablePage";
 import JournalTopicsPage from "./pages/journal/JournalTopicsPage";
+import RaportichkaListPage from "./pages/raportichka/RaportichkaListPage";
+import RaportichkaTable from "./pages/raportichka/RaportichkaTable";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
             <Route path="/password_reset" element={<PasswordReset/>}/>
             <Route path="/search" element={<SearchPage/>}/>
             <Route path="/registration" element={<RegistrationPage/>}/>
+            <Route path="/raportichka/list" element={<RaportichkaListPage/>}/>
+            <Route path="/raportichka/:id/table" element={<RaportichkaTable/>}/>
         </Routes>
     </BrowserRouter>
   );

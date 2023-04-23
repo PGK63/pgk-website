@@ -34,7 +34,7 @@ const JournalTablePage = () => {
     }, [journalRows])
 
     useEffect(() => {
-        const dates = journalColumn.map(column => column.date).sort(date => date)
+        const dates = journalColumn.map(column => column.date).sort((a,b) => a - b)
 
         setJournalDates([...new Set(dates.map(item => item))])
     }, [journalColumn])

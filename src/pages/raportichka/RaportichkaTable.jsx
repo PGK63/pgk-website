@@ -1,56 +1,60 @@
 import React, {useEffect, useState} from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
-import {useLocation, useParams} from "react-router-dom";
-import JournalService from "../../api/journal/JournalService";
-import {correctionDate} from "../../utils/DateExtensions";
+import RaportichkaService from "../../api/raportichka/RaportichkaService";
+import {useParams} from "react-router-dom";
+import UserService from "../../api/user/UserService";
+import GroupService from "../../api/group/GroupService";
 import {useTable} from "react-table";
 
-const JournalTopicsPage = () => {
+const RaportichkaTable = () => {
 
-    const location = useLocation()
-    const journalId = useParams().journalId
-    const journalSubjectId = useParams().subjectId
-    const maxHours = new URLSearchParams(location.search).get('maxHours')
-    const [topics, setTopics] = useState([])
+    const raportichkaId = useParams().id
+    const [raportichkaRows, setRaportichkaRows] = useState([])
 
     useEffect(() => {
-        JournalService.getTopicsAll(journalSubjectId).then(r => {
-            let topics = r.results.sort((a,b) => a.hours - b.hours)
+        RaportichkaService.getRowAll(raportichkaId).then((r) => {
+            let rows = r.results
 
-            topics = topics.map((topic) => {
+            rows = rows.map((row) => {
                 return {
-                    id: topic.id,
-                    title: topic.title,
-                    homeWork: topic.homeWork,
-                    hours: `${topic.hours}/${maxHours}`,
-                    date: correctionDate(topic.date),
+                    numberLesson: row.numberLesson,
+                    student: `${UserService.getFIOShort(row.student)}\n(${GroupService.getName(row.student.group)})`,
+                    subject: `${row.subject.subjectTitle}\n(${UserService.getFIOShort(row.teacher)})`,
+                    hours: row.hours,
+                    confirmation: row.confirmation ? "✔️" : "❌"
                 }
             })
 
-            setTopics(topics)
-        })
-    }, [journalSubjectId, maxHours])
+            rows = rows.sort((a, b) => a.numberLesson - b.numberLesson)
 
-    const data = React.useMemo(() => topics, [topics]);
+            setRaportichkaRows(rows)
+        })
+    }, [raportichkaId])
+
+    const data = React.useMemo(() => raportichkaRows, [raportichkaRows]);
 
     const columns = React.useMemo(
         () => [
             {
-                Header: "Тема",
-                accessor: "title",
+                Header: "Пара",
+                accessor: "numberLesson",
+            },
+            {
+                Header: "Студент",
+                accessor: "student",
+            },
+            {
+                Header: "Предмет",
+                accessor: "subject",
             },
             {
                 Header: "Часы",
                 accessor: "hours",
             },
             {
-                Header: "Дата",
-                accessor: "date",
+                Header: "Подпись",
+                accessor: "confirmation",
             },
-            {
-                Header: "Задание на дом",
-                accessor: "homeWork",
-            }
         ],
         []
     );
@@ -91,4 +95,4 @@ const JournalTopicsPage = () => {
     );
 };
 
-export default JournalTopicsPage;
+export default RaportichkaTable;
