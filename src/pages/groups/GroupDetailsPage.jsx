@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import GroupService from "../../api/group/GroupService";
 import Loading from "../../components/Loading";
 import GroupNameContainer from "./components/GroupNameContainer";
@@ -12,13 +12,15 @@ import GroupStudents from "./components/GroupStudents";
 import SpecialityItem from "../speciality/components/SpecialityItem";
 
 const GroupDetailsPage = () => {
+
+    const navigate = useNavigate()
     const groupId = useParams().id
     const [group, setGroup] = useState()
     const [errorText, setErrorText] = useState()
 
     useEffect(() => {
         getGroupsDetails()
-    }, [])
+    }, [groupId])
 
     async function getGroupsDetails() {
         try {
@@ -32,6 +34,7 @@ const GroupDetailsPage = () => {
     return (
         <div>
             <MainHeader/>
+
             <div className="content">
                 { errorText != null &&
                     <ErrorText>{errorText}</ErrorText>
@@ -46,9 +49,9 @@ const GroupDetailsPage = () => {
                                 justifyContent: "center"
                             }}>
                                 <b style={{fontSize:"25px", margin: "10px"}}>Добавить</b>
-                                <BaseButton>Студент</BaseButton>
-                                <BaseButton>Староста</BaseButton>
-                                <BaseButton>Зам Староста</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/student")}>Студент</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/headman")}>Староста</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/headmanDeputy")}>Зам Староста</BaseButton>
                             </div>
                         </div>
 

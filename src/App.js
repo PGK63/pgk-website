@@ -40,7 +40,7 @@ function App() {
             <Route path="/guide" element={<GuidePaige/>}/>
             <Route path="/password_reset" element={<PasswordReset/>}/>
             <Route path="/search" element={<SearchPage/>}/>
-            <Route path="/registration" element={<RegistrationPage/>}/>
+            <Route path="/registration/:role" element={<RegistrationPage/>}/>
             <Route path="/raportichka/list" element={<RaportichkaListPage/>}/>
             <Route path="/raportichka/:id/table" element={<RaportichkaTable/>}/>
         </Routes>

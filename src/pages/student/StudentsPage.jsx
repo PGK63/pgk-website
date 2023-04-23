@@ -38,7 +38,6 @@ const StudentsPage = () => {
             <div className="content">
             <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Студенты (" + totalCount + ")"}</h1>
-                    <BaseButton>Добавить</BaseButton>
             </div>
                 {studentsError &&
                     <ErrorText>{"Произошла ошибка \n " + studentsError}</ErrorText>
