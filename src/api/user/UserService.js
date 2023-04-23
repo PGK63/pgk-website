@@ -30,6 +30,24 @@ export default class UserService {
         })
     }
 
+    static async sendEmailPasswordReset(email) {
+
+        const formData = new FormData();
+
+        return await axios.post(
+            "https://api.cfif31.ru/pgk63/api/User/Email/Pasword/Reset",
+            formData,
+            {
+                params: {
+                    "email": email
+                },
+                headers: {
+                    "Authorization": "Bearer " + await AuthService.getToken(),
+                    'content-type': 'multipart/form-data'
+                }
+            })
+    }
+
     static getLocalUser() {
         return JSON.parse(localStorage.getItem("user"))
     }
@@ -47,7 +65,6 @@ export default class UserService {
             console.log(e)
         }
     }
-
     static getFIOFull(user) {
         try {
             const middleName = user.middleName

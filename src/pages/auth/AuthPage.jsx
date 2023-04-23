@@ -2,9 +2,6 @@ import React, {useState} from 'react';
 import "./AuthPage.css";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../api/auth/AuthService";
-
-// import logo from 'src/resources/icons/pgk_icon.png';
-
 const AuthPage = () => {
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState("")
@@ -84,10 +81,7 @@ const AuthPage = () => {
                                 <label htmlFor="password">Пароль</label>
                             </div>
                             <button id="auth_button" className="a-link" onClick={auth}>Войти</button>
-                            <button className="password-reset-button" onClick={navigate("/password_reset")}>Забыл пароль</button>
-                            <button className="password-reset-button" onClick={navigate("/RegistrationPage")}>новый пользователь</button>
-
-
+                            <button className="password-reset-button" onClick={() => navigate("/password_reset")}>Забыл пароль</button>
                         </div>
                     </div>
                 </div>
