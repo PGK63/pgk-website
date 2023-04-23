@@ -3,16 +3,20 @@ import { useTable } from 'react-table';
 import MainHeader from "../../components/mainHeader/MainHeader";
 import {Style} from "./JournalTablePage.css";
 import JournalService from "../../api/journal/JournalService";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import StudentService from "../../api/student/StudentService";
 import UserService from "../../api/user/UserService";
 import {correctionDate} from "../../utils/DateExtensions";
+import BaseButton from "../../components/BaseButton";
 
 const JournalTablePage = () => {
 
+    const navigate = useNavigate();
     const location = useLocation()
     const journalId = useParams().journalId
     const groupId = new URLSearchParams(location.search).get('groupId')
+    const subjectTitle = new URLSearchParams(location.search).get('subjectTitle')
+    const maxHours = new URLSearchParams(location.search).get('maxHours')
     const journalSubjectId = useParams().subjectId
     const [journalRows, setJournalRows] = useState([])
     const [journalColumn, setJournalColumn] = useState([])
@@ -39,7 +43,7 @@ const JournalTablePage = () => {
         StudentService.getAll(1,100, groupId).then((r) => {
             setStudents(r.results)
         })
-    }, [])
+    }, [groupId])
 
     const data = React.useMemo(() => {
         return [
@@ -81,17 +85,19 @@ const JournalTablePage = () => {
         [journalDates]
     );
 
-    useEffect(() => {
-        console.log(columns)
-        console.log(data)
-    }, columns, data)
-
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({ columns, data })
 
     return (
         <div>
             <MainHeader/>
             <div className="content">
+                <div style={{margin: "50px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
+                    <h1 style={{fontWeight: "bold"}}>{subjectTitle}</h1>
+                    <BaseButton
+                        onClick={() => navigate(`/journals/${journalId}/subjects/${journalSubjectId}/topics?maxHours=${maxHours}`)}
+                    >Темы</BaseButton>
+                </div>
+
                 <table {...getTableProps()}>
                     <thead>
                         {headerGroups.map((headerGroup) => (
