@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import GroupItem from "./GroupItem";
 import {useFetching} from "../../../hooks/useFetching";
 import StudentService from "../../../api/student/StudentService";
 import {useObserver} from "../../../hooks/useObserver";

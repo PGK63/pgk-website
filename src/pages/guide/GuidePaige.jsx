@@ -7,8 +7,12 @@ import GuideItem from "./components/GuideItem";
 import DirectorService from "../../api/director/DirectorService";
 import DepartmentHeadService from "../../api/departmentHead/DepartmentHeadService";
 import TeacherService from "../../api/teacher/TeacherService";
+import Modal from "../../components/modal/Modal";
+import {useNavigate} from "react-router-dom";
 
 const GuidePaige = () => {
+
+    const navigate = useNavigate()
     const [directors, setDirectors] = useState([])
     const [techers, setTeachers] = useState([])
     const [departmentHead, setDepartmentHead] = useState([])
@@ -20,6 +24,7 @@ const GuidePaige = () => {
     const [teacherTotalCount, setTecherTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const lastElement = useRef()
+    const [modalShow, setModalShow] = useState(false)
 
     const [fetchDirectors, isDirectorsLoading] = useFetching(async () => {
         const response = await DirectorService.getAll(page);
@@ -59,13 +64,49 @@ const GuidePaige = () => {
         fetchTeachers()
     }, [page])
 
+    function registration(role) {
+        navigate(`/registration/${role}`)
+    }
+
     return (
         <div>
             <MainHeader/>
+
+            <Modal show={modalShow} handleClose={() => setModalShow(false)}>
+                <div style={{
+                    margin: "0 auto",
+                    textAlign: "center",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    width: "100%"
+                }}>
+                    <h2 style={{
+                        margin: "15px",
+                        fontWeight: "bold"
+                    }}>Добавить</h2>
+
+                    <BaseButton onClick={() => registration("director")}>
+                        Директора
+                    </BaseButton>
+
+                    <BaseButton onClick={() => registration("department_head")}>
+                        Заведующего отделения
+                    </BaseButton>
+
+                    <BaseButton onClick={() => registration("teacher")}>
+                        Преподавателя
+                    </BaseButton>
+
+                    <BaseButton onClick={() => registration("educational_sector")}>
+                        Учебный сектор
+                    </BaseButton>
+                </div>
+            </Modal>
+
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Руководство (" + (direcotorTotalCount + teacherTotalCount + departmentHeadTotalCount) + ")"}</h1>
-                    <BaseButton>Добавить</BaseButton>
+                    <BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>
                 </div>
 
                 <li style={{margin: "0 auto", textAlign: "center"}}>{
