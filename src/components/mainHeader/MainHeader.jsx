@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "./MainHeader.css";
 import UserService from "../../api/user/UserService";
 import {useNavigate} from "react-router-dom";
+import WeatcherServer from "../../api/pogoda/Pogoda";
 
 const MainHeader = (preps) => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const MainHeader = (preps) => {
     const [userFirstName, setFirstName] = useState()
     const [userIcon, serUserIcon] = useState("")
     const [searchText, setSearchText] = useState("")
-
+    const [weatcherTemp, setWeatcherTemp] = useState("")
     useEffect(() => {
         getUser()
     }, [])
@@ -17,6 +18,17 @@ const MainHeader = (preps) => {
     useEffect(() => {
         setSearchText(preps.searchText)
     }, [preps.searchText])
+
+    useEffect(() => {
+        WeatcherServer.Pogoda() // сюда
+        getUser()
+    }, [])
+    useEffect(() => {
+        WeatcherServer.Pogoda().then((response) => {
+            setWeatcherTemp(Math.trunc(response.main.temp))
+        })
+        getUser()
+    }, [])
 
     async function getUser() {
         const response = await UserService.get()
@@ -69,8 +81,9 @@ const MainHeader = (preps) => {
                         <b className="topnav-a">Доброе утро {userFirstName}</b>
                         <b className="topnav-a" id="date-text">Ср</b>
                         <b className="topnav-a" id="time-text">9:00</b>
-                        <b className="topnav-a" id="weatcher-text">-15</b>
+                        <b >{weatcherTemp} °C</b>
                         <b className="topnav-a">ИСП-239</b>
+
                     </div>
                 </div>
             </header>
