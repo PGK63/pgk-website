@@ -52,6 +52,17 @@ export default class RaportichkaService {
                 "Authorization": "Bearer " + await AuthService.getToken()
             }
         })
+
+        return response.data
+    }
+
+    static async deleteRow(id) {
+        const response = await axios.delete(`https://api.cfif31.ru/pgk63/api/Raportichka/Row/${id}`, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
         return response.data
     }
 }

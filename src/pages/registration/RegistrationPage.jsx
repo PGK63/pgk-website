@@ -22,7 +22,7 @@ function RegistrationPage() {
     const [errorText, setErrorText] = useState("")
     const [groups, setGroups] = useState([])
     const [pageGroup, setPageGroup] = useState(1)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const lastElement = useRef()
 
     const [fetchGroups, isGroupLoading] = useFetching(async () => {

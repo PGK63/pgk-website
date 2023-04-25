@@ -5,18 +5,35 @@ import {useParams} from "react-router-dom";
 import UserService from "../../api/user/UserService";
 import GroupService from "../../api/group/GroupService";
 import {useTable} from "react-table";
+import Modal from "../../components/modal/Modal";
+import RedButton from "../../components/RedButton";
 
 const RaportichkaTable = () => {
 
     const raportichkaId = useParams().id
     const [raportichkaRows, setRaportichkaRows] = useState([])
+    const [showModal, setShowModal] = useState(false)
+    const [rowItemId, setRowItemId] = useState(null)
 
     useEffect(() => {
+        if(rowItemId !== null){
+            setShowModal(true)
+        }else {
+            setShowModal(false)
+        }
+    }, [rowItemId])
+    
+    useEffect(() => {
+        getRaportichka()
+    }, [raportichkaId])
+
+    function getRaportichka() {
         RaportichkaService.getRowAll(raportichkaId).then((r) => {
             let rows = r.results
 
             rows = rows.map((row) => {
                 return {
+                    id: row.id,
                     numberLesson: row.numberLesson,
                     student: `${UserService.getFIOShort(row.student)}\n(${GroupService.getName(row.student.group)})`,
                     subject: `${row.subject.subjectTitle}\n(${UserService.getFIOShort(row.teacher)})`,
@@ -29,7 +46,7 @@ const RaportichkaTable = () => {
 
             setRaportichkaRows(rows)
         })
-    }, [raportichkaId])
+    }
 
     const data = React.useMemo(() => raportichkaRows, [raportichkaRows]);
 
@@ -61,9 +78,32 @@ const RaportichkaTable = () => {
 
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({ columns, data })
 
+    function deleteRowItem() {
+        if(rowItemId != null) {
+            RaportichkaService.deleteRow(rowItemId).then(() => {
+                setRowItemId(null)
+                getRaportichka()
+            })
+        }
+    }
+
     return (
         <div>
             <MainHeader/>
+
+            <Modal show={showModal} handleClose={() => setRowItemId(null)} showButtonClose={false}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%"
+                }}>
+                    <RedButton onClick={deleteRowItem}>
+                        Удалить поле
+                    </RedButton>
+                </div>
+            </Modal>
+
             <div className="content">
                 <table {...getTableProps()}>
                     <thead>
@@ -83,7 +123,11 @@ const RaportichkaTable = () => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell) => (
-                                    <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                                    <td {...cell.getCellProps()}
+                                        onClick={() => {
+                                            setRowItemId(row.original.id)
+                                        }
+                                    }> {cell.render("Cell")} </td>
                                 ))}
                             </tr>
                         );

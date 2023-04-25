@@ -2,7 +2,7 @@ import React from 'react';
 import './Modal.css';
 import BaseButton from "../BaseButton";
 
-const Modal = ({ handleClose, show, children }) => {
+const Modal = ({ handleClose, show, children, showButtonClose = true}) => {
 
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
@@ -18,9 +18,11 @@ const Modal = ({ handleClose, show, children }) => {
                     display: "flex",
                     marginTop: "40px"
                 }}>
-                    <BaseButton onClick={handleClose}>
-                        Закрыть
-                    </BaseButton>
+                    { showButtonClose &&
+                        <BaseButton onClick={handleClose}>
+                            Закрыть
+                        </BaseButton>
+                    }
                 </div>
             </section>
         </div>
