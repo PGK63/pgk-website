@@ -7,6 +7,7 @@ import GroupService from "../../api/group/GroupService";
 import {useTable} from "react-table";
 import Modal from "../../components/modal/Modal";
 import RedButton from "../../components/RedButton";
+import BaseButton from "../../components/BaseButton";
 
 const RaportichkaTable = () => {
 
@@ -87,6 +88,15 @@ const RaportichkaTable = () => {
         }
     }
 
+    function updateConfirmation() {
+        if(rowItemId != null) {
+            RaportichkaService.updateConfirmation(rowItemId).then(() => {
+                setRowItemId(null)
+                getRaportichka()
+            }).catch((e) => console.log(e))
+        }
+    }
+
     return (
         <div>
             <MainHeader/>
@@ -98,6 +108,10 @@ const RaportichkaTable = () => {
                     alignItems: "center",
                     height: "100%"
                 }}>
+                    <BaseButton onClick={updateConfirmation}>
+                        Добавить/Убрать подпись
+                    </BaseButton>
+
                     <RedButton onClick={deleteRowItem}>
                         Удалить поле
                     </RedButton>

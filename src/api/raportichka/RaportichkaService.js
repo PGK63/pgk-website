@@ -65,4 +65,14 @@ export default class RaportichkaService {
 
         return response.data
     }
+
+    static async updateConfirmation(id) {
+        const response = await axios.patch(`https://api.cfif31.ru/pgk63/api/Raportichka/Row/${id}/Confirmation`,null, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
 }
