@@ -20,12 +20,12 @@ const MainHeader = (preps) => {
     }, [preps.searchText])
 
     useEffect(() => {
-        WeatcherServer.Pogoda() // сюда
+        WeatcherServer.Pogoda()
         getUser()
     }, [])
     useEffect(() => {
         WeatcherServer.Pogoda().then((response) => {
-            setWeatcherTemp(Math.trunc(response.main.temp))
+            setWeatcherTemp(Math.trunc(response.main.temp).toString())
         })
         getUser()
     }, [])

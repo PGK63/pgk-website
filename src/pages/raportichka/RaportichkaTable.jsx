@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
 import RaportichkaService from "../../api/raportichka/RaportichkaService";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import UserService from "../../api/user/UserService";
 import GroupService from "../../api/group/GroupService";
 import {useTable} from "react-table";
@@ -11,6 +11,7 @@ import BaseButton from "../../components/BaseButton";
 
 const RaportichkaTable = () => {
 
+    const navigate = useNavigate()
     const raportichkaId = useParams().id
     const [raportichkaRows, setRaportichkaRows] = useState([])
     const [showModal, setShowModal] = useState(false)
@@ -41,6 +42,15 @@ const RaportichkaTable = () => {
                     hours: row.hours,
                     confirmation: row.confirmation ? "✔️" : "❌"
                 }
+            })
+
+            rows.push({
+                id: 0,
+                numberLesson: "+",
+                student: "+",
+                subject: "+",
+                hours: "+",
+                confirmation: "+"
             })
 
             rows = rows.sort((a, b) => a.numberLesson - b.numberLesson)
@@ -139,7 +149,12 @@ const RaportichkaTable = () => {
                                 {row.cells.map((cell) => (
                                     <td {...cell.getCellProps()}
                                         onClick={() => {
-                                            setRowItemId(row.original.id)
+                                            const id = row.original.id
+
+                                            if(id === 0)
+                                                navigate(`/raportichka/${raportichkaId}/table/row/add`)
+                                            else
+                                                setRowItemId(id)
                                         }
                                     }> {cell.render("Cell")} </td>
                                 ))}

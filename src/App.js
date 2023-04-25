@@ -19,6 +19,7 @@ import JournalTablePage from "./pages/journal/JournalTablePage";
 import JournalTopicsPage from "./pages/journal/JournalTopicsPage";
 import RaportichkaListPage from "./pages/raportichka/RaportichkaListPage";
 import RaportichkaTable from "./pages/raportichka/RaportichkaTable";
+import AddRaportichkaRowPage from "./pages/raportichka/AddRaportichkaRowPage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/registration/:role" element={<RegistrationPage/>}/>
             <Route path="/raportichka/list" element={<RaportichkaListPage/>}/>
             <Route path="/raportichka/:id/table" element={<RaportichkaTable/>}/>
+            <Route path="/raportichka/:id/table/row/add" element={<AddRaportichkaRowPage/>}/>
         </Routes>
     </BrowserRouter>
   );
