@@ -28,8 +28,8 @@ export function getMonthValue(monthNumber) {
 export function times() {
     const currentHour= new Date().getHours();
 
-    if(currentHour >=0 && currentHour <6)  return "Доброй ночи!"
-    else if (currentHour >=6 && currentHour <12) return "Доброе утро!"
+    if(currentHour >=0 && currentHour <6)  return "Доброй ночи"
+    else if (currentHour >=6 && currentHour <12) return "Доброе утро"
     else if (currentHour >=12 && currentHour <18)  return "Добрый день"
     else  return "Добрый вечер"
 }
@@ -44,4 +44,20 @@ export function getClock(){
         hours = (date.getHours() < 10) ? '0' + date.getHours() : date.getHours(),
         minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes()
       return hours + ':' + minutes;
+}
+
+export function networkDateFormat(date) {
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    const year = date.getFullYear()
+
+    if(month.toString().length === 1){
+        month = `0${month}`
+    }
+
+    if(day.toString().length === 1){
+        day = `0${day}`
+    }
+
+    return `${year}-${month}-${day}`
 }

@@ -6,7 +6,7 @@ import JournalService from "../../api/journal/JournalService";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import StudentService from "../../api/student/StudentService";
 import UserService from "../../api/user/UserService";
-import {correctionDate} from "../../utils/DateExtensions";
+import {correctionDate, networkDateFormat} from "../../utils/DateExtensions";
 import BaseButton from "../../components/BaseButton";
 import Modal from "../../components/modal/Modal";
 import EvaluationItem from "./components/EvaluationItem";
@@ -147,7 +147,14 @@ const JournalTablePage = () => {
     }
 
     function addColumn(studentId, columnDate, rowId) {
-        JournalService.addColumn(studentId, journalSubjectId, evaluation, columnDate, rowId).then(() => {
+
+        JournalService.addColumn(
+            studentId,
+            journalSubjectId,
+            evaluation,
+            columnDate,
+            rowId
+        ).then(() => {
             setJournalRowItem(null)
 
             JournalService.getRowAll(journalSubjectId).then(r => {
@@ -212,13 +219,9 @@ const JournalTablePage = () => {
                                         if(journalRowItem.rowId !== undefined && journalRowItem.evaluation !== "0") {
                                             updateEvaluation(journalRowItem.rowId, evaluation)
                                         }else {
-                                            if(journalRowItem.date === undefined){
-                                                date.setDate(date.getDate() + 1)
-                                            }
-
                                             addColumn(
                                                 journalRowItem.student.id,
-                                                journalRowItem.date === undefined ? date.toISOString() : journalRowItem.date,
+                                                journalRowItem.date === undefined ? networkDateFormat(date) : journalRowItem.date,
                                                 journalRowItem.columnId
                                             )
                                         }
