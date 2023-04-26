@@ -20,6 +20,7 @@ import JournalTopicsPage from "./pages/journal/JournalTopicsPage";
 import RaportichkaListPage from "./pages/raportichka/RaportichkaListPage";
 import RaportichkaTable from "./pages/raportichka/RaportichkaTable";
 import AddRaportichkaRowPage from "./pages/raportichka/AddRaportichkaRowPage";
+import SettingsTelegram from "./pages/settingsTelegram/SettingsTelegram";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/raportichka/list" element={<RaportichkaListPage/>}/>
             <Route path="/raportichka/:id/table" element={<RaportichkaTable/>}/>
             <Route path="/raportichka/:id/table/row/add" element={<AddRaportichkaRowPage/>}/>
+            <Route path="/settings/telegram" element={<SettingsTelegram/>}/>
         </Routes>
     </BrowserRouter>
   );

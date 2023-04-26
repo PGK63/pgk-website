@@ -77,6 +77,7 @@ const AuthPage = () => {
                                     placeholder="Пароль"
                                     value={password}
                                     onChange={event => setPassword(event.target.value)}
+                                    // C2jn0oPWPQ0smEsP
                                 />
                                 <label htmlFor="password">Пароль</label>
                             </div>
