@@ -21,6 +21,7 @@ import RaportichkaListPage from "./pages/raportichka/RaportichkaListPage";
 import RaportichkaTable from "./pages/raportichka/RaportichkaTable";
 import AddRaportichkaRowPage from "./pages/raportichka/AddRaportichkaRowPage";
 import SettingsTelegram from "./pages/settingsTelegram/SettingsTelegram";
+import CreateJournalPage from "./pages/journal/CreateJournalPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/groups" element={<GroupsPage/>}/>
             <Route path="/groups/:id" element={<GroupDetailsPage/>}/>
+            <Route path="/groups/:id/journal/create" element={<CreateJournalPage/>}/>
             <Route path="/students" element={<StudentsPage/>}/>
             <Route path="/specialties" element={<SpecialtiesPage/>}/>
             <Route path="/subjects" element={<SubjectsPage/>}/>

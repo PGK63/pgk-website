@@ -101,10 +101,22 @@ export default class JournalService {
             }
         })
 
-        console.log(rowId)
-        console.log(Number(rowId))
-        console.log(response)
-        console.log(response.data)
+        return response.data
+    }
+
+    static async createJournal(groupId, course, semester) {
+        const data = JSON.stringify({
+            groupId: Number(groupId),
+            course: Number(course),
+            semester: Number(semester)
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Journal`,data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
 
         return response.data
     }

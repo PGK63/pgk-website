@@ -55,13 +55,14 @@ const GroupDetailsPage = () => {
                             </div>
                         </div>
 
-                        <div className="card" style={{marginTop: "10px", marginLeft: "250px", marginRight: "250px"}}>
+                        <div className="card" style={{marginTop: "10px", marginLeft: "50px", marginRight: "50px"}}>
                             <div className="group-other-buttons" style={{
                                 display: 'flex',
                                 alignItems: "center",
                                 justifyContent: "center"
                             }}>
                                 <BaseButton>Изменить курс</BaseButton>
+                                <BaseButton onClick={() => navigate(`/groups/${groupId}/journal/create`)}>Добавить журнал</BaseButton>
                                 <RedButton>Удалить группу</RedButton>
                             </div>
                         </div>
