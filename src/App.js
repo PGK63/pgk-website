@@ -23,6 +23,7 @@ import AddRaportichkaRowPage from "./pages/raportichka/AddRaportichkaRowPage";
 import SettingsTelegram from "./pages/settingsTelegram/SettingsTelegram";
 import CreateJournalPage from "./pages/journal/CreateJournalPage";
 import JournalCreateTopicPage from "./pages/journal/JournalCreateTopicPage";
+import JournalCreateSubjectPage from "./pages/journal/JournalCreateSubjectPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="/departments" element={<DepartmentsPage/>}/>
             <Route path="/journals" element={<JournalsPage/>}/>
             <Route path="/journals/:journalId/subjects" element={<JournalSubjectsPage/>}/>
+            <Route path="/journals/:journalId/subjects/create" element={<JournalCreateSubjectPage/>}/>
             <Route path="/journals/:journalId/subjects/:subjectId/table" element={<JournalTablePage/>}/>
             <Route path="/journals/:journalId/subjects/:subjectId/topics" element={<JournalTopicsPage/>}/>
             <Route path="/journals/:journalId/subjects/:subjectId/topics/create" element={<JournalCreateTopicPage/>}/>

@@ -150,6 +150,23 @@ export default class JournalService {
         return response.data
     }
 
+    static async createSubject(journalId, maxHours, subjectId) {
+
+        const data = JSON.stringify({
+            hours: Number(maxHours),
+            subjectId: Number(subjectId)
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Journal/${journalId}/Subject`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
     static EvaluationCorrection(evaluation) {
         return evaluation.replace("HAS_", "")
     }

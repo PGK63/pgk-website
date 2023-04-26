@@ -7,10 +7,13 @@ import BaseButton from "../../components/BaseButton";
 import ErrorText from "../../components/ErrorText";
 import Loading from "../../components/Loading";
 import JournalSubjectItem from "./components/JournalSubjectItem";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import UserService from "../../api/user/UserService";
+import {UserRole} from "../../api/user/model/UserRole";
 
 const JournalSubjectsPage = () => {
 
+    const navigate = useNavigate()
     const location = useLocation()
     const journalId = useParams().journalId
     const groupId = new URLSearchParams(location.search).get('groupId')
@@ -19,6 +22,7 @@ const JournalSubjectsPage = () => {
     const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const lastElement = useRef()
+    const [user, setUser] = useState(null)
 
     const [fetchJournalSubjects, isJournalSubjectsLoading, journalSubjectsError] = useFetching(async () => {
         const response = await JournalService.getSubjectAll(journalId, page);
@@ -34,6 +38,10 @@ const JournalSubjectsPage = () => {
     })
 
     useEffect(() => {
+        setUser(UserService.getLocalUser())
+    }, [])
+
+    useEffect(() => {
         fetchJournalSubjects()
     }, [page])
 
@@ -43,7 +51,9 @@ const JournalSubjectsPage = () => {
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>
-                    <BaseButton>Добавить</BaseButton>
+                    { (user !== null && user.userRole === UserRole.teacher) &&
+                        <BaseButton onClick={() => navigate(`/journals/${journalId}/subjects/create`)}>Добавить</BaseButton>
+                    }
                 </div>
 
                 {journalSubjectsError &&
