@@ -29,7 +29,8 @@ const JournalTablePage = () => {
     const [students, setStudents] = useState([])
     const [modal, setModal] = useState(false)
     const [journalRowItem, setJournalRowItem] = useState(null)
-    const [value, onChange] = useState(new Date());
+    const [date, onDateChange] = useState(new Date());
+    const [evaluation, setEvaluation] = useState("")
 
     useEffect(() => {
         if(journalRowItem === null){
@@ -50,7 +51,7 @@ const JournalTablePage = () => {
     }, [journalRows])
 
     useEffect(() => {
-        const dates = journalColumn.map(column => column.date).sort((a,b) => a - b)
+        const dates = journalColumn.map(column => column.date).sort()
 
         dates.unshift("+")
 
@@ -75,6 +76,10 @@ const JournalTablePage = () => {
                         "student": student
                     }
 
+                    if(row !== undefined){
+                        item["rowId"] = row.id
+                    }
+
                     row.columns.forEach(col => {
                         const dateId = `date_${col.date}`
                         item[dateId] = JournalService.EvaluationCorrection(col.evaluation)
@@ -86,7 +91,9 @@ const JournalTablePage = () => {
                     return item
                 }catch (e) {
                     return {
-                        "studentFIO": UserService.getFIOShort(student)
+                        "studentFIO": UserService.getFIOShort(student),
+                        "student": student,
+                        "+": "+"
                     }
                 }
             })
@@ -120,12 +127,32 @@ const JournalTablePage = () => {
     const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} = useTable({ columns, data })
 
     function deleteRow(rowId) {
-        JournalService.deleteRow(rowId).then((r) => {
+        JournalService.deleteRow(rowId).then(() => {
             setJournalRowItem(null)
 
             JournalService.getRowAll(journalSubjectId).then(r => {
                 setJournalRows(r.results)
             })
+        })
+    }
+
+    function updateEvaluation(columnId, evaluation) {
+        JournalService.updateEvaluation(columnId, evaluation).then(() => {
+            setJournalRowItem(null)
+
+            JournalService.getRowAll(journalSubjectId).then(r => {
+                setJournalRows(r.results)
+            })
+        })
+    }
+
+    function addColumn(studentId, columnDate, rowId) {
+        JournalService.addColumn(studentId, journalSubjectId, evaluation, columnDate, rowId).then(() => {
+            setJournalRowItem(null)
+
+            JournalService.getRowAll(journalSubjectId).then(r => {
+                setJournalRows(r.results)
+            }).catch((e) => console.log(e))
         })
     }
 
@@ -147,11 +174,12 @@ const JournalTablePage = () => {
                             }}>{UserService.getFIOFull(journalRowItem.student)}</h1>
 
                             { journalRowItem.type === "add_row_date" &&
-                                <div className="Sample__container">
-                                    <main className="Sample__container__content">
-
-                                    <Calendar className= "calendar" onChange={onChange} value={value} />
-                                    </main>
+                                <div>
+                                    <div className="Sample__container">
+                                        <main className="Sample__container__content">
+                                            <Calendar className= "calendar" onChange={onDateChange} value={date} />
+                                        </main>
+                                    </div>
                                 </div>
                             }
 
@@ -161,7 +189,11 @@ const JournalTablePage = () => {
                                     width: "100%"
                                 }}>{correctionDate(journalRowItem.date)}</h1>
                             }
-                            { (journalRowItem.type === "add_evaluation" || journalRowItem.type === "update_evaluation") &&
+                            { (
+                                journalRowItem.type === "add_evaluation"
+                                    || journalRowItem.type === "update_evaluation"
+                                    || journalRowItem.type === "add_row_date"
+                                ) &&
                                 <div>
                                     <div style={{
                                         justifyContent: "center",
@@ -170,13 +202,27 @@ const JournalTablePage = () => {
                                         {["2","3","4","5","H"].map( item =>
                                             <EvaluationItem
                                                 elevation={item}
-                                                color={journalRowItem.evaluation === item ? "#205798" : "#919090"}
-                                                onClick={() => {}}
+                                                color={evaluation === item ? "#205798" : "#919090"}
+                                                onClick={() => {setEvaluation(item)}}
                                             />
                                         )}
                                     </div>
 
-                                    <BaseButton onClick={() => deleteRow(journalRowItem.rowId)}>
+                                    <BaseButton onClick={() => {
+                                        if(journalRowItem.rowId !== undefined && journalRowItem.evaluation !== "0") {
+                                            updateEvaluation(journalRowItem.rowId, evaluation)
+                                        }else {
+                                            if(journalRowItem.date === undefined){
+                                                date.setDate(date.getDate() + 1)
+                                            }
+
+                                            addColumn(
+                                                journalRowItem.student.id,
+                                                journalRowItem.date === undefined ? date.toISOString() : journalRowItem.date,
+                                                journalRowItem.columnId
+                                            )
+                                        }
+                                    }}>
                                         {journalRowItem.evaluation !== "0" ? "Обновить оценку" : "Добавить оценку"}
                                     </BaseButton>
                                 </div>
@@ -222,16 +268,20 @@ const JournalTablePage = () => {
                                         if(cell.column.Header === "Добавить"){
                                             setJournalRowItem({
                                                 type: "add_row_date",
-                                                student: cell.row.original.student
+                                                student: cell.row.original.student,
+                                                evaluation: "0"
                                             })
                                         }else if(cell.value === undefined) {
+                                            setEvaluation("0")
                                             setJournalRowItem({
                                                 type: "add_evaluation",
                                                 student: cell.row.original.student,
                                                 date: cell.column.id.replace("date_", ""),
-                                                evaluation: "0"
+                                                evaluation: "0",
+                                                columnId: cell.row.original.rowId
                                             })
                                         }else if(cell.value.length === 1 || cell.value === "H"){
+                                            setEvaluation(cell.value)
                                             setJournalRowItem({
                                                 type: "update_evaluation",
                                                 student: cell.row.original.student,

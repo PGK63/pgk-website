@@ -71,6 +71,44 @@ export default class JournalService {
         return response.data
     }
 
+    static async updateEvaluation(columnId, evaluation) {
+        const response = await axios.patch(`https://api.cfif31.ru/pgk63/api/Journal/Subject/Row/Column/${columnId}/Evaluation`,null, {
+            params: {
+                "evaluation": `HAS_${evaluation}`
+            },
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
+    static async addColumn(studentId, journalSubjectId, evaluation, date, rowId) {
+
+        const data = JSON.stringify({
+            studentId: Number(studentId),
+            journalSubjectId: Number(journalSubjectId),
+            journalSubjectRowId: Number(rowId),
+            evaluation: `HAS_${evaluation}`,
+            date: date
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Journal/Subject/Row/Column`,data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        console.log(rowId)
+        console.log(Number(rowId))
+        console.log(response)
+        console.log(response.data)
+
+        return response.data
+    }
+
     static EvaluationCorrection(evaluation) {
         return evaluation.replace("HAS_", "")
     }

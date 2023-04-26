@@ -18,11 +18,9 @@ const Modal = ({ handleClose, show, children, showButtonClose = true}) => {
                     display: "flex",
                     marginTop: "40px"
                 }}>
-                    { showButtonClose &&
-                        <BaseButton onClick={handleClose}>
-                            Закрыть
-                        </BaseButton>
-                    }
+                    <BaseButton onClick={handleClose}>
+                        Закрыть
+                    </BaseButton>
                 </div>
             </section>
         </div>
