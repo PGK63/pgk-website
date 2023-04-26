@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import JournalService from "../../api/journal/JournalService";
 import {correctionDate} from "../../utils/DateExtensions";
 import {useTable} from "react-table";
 
 const JournalTopicsPage = () => {
 
+    const navigate = useNavigate()
     const location = useLocation()
     const journalId = useParams().journalId
+    const subjectId = useParams().subjectId
     const journalSubjectId = useParams().subjectId
     const maxHours = new URLSearchParams(location.search).get('maxHours')
     const [topics, setTopics] = useState([])
@@ -25,6 +27,14 @@ const JournalTopicsPage = () => {
                     hours: `${topic.hours}/${maxHours}`,
                     date: correctionDate(topic.date),
                 }
+            })
+
+            topics.push({
+                id: "+",
+                title: "+",
+                homeWork: "+",
+                hours: "+",
+                date: "+",
             })
 
             setTopics(topics)
@@ -79,7 +89,11 @@ const JournalTopicsPage = () => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell) => (
-                                    <td {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                                    <td {...cell.getCellProps()} onClick={() => {
+                                        if(cell.value === "+"){
+                                            navigate(`/journals/${journalId}/subjects/${subjectId}/topics/create?maxHours=${maxHours}`)
+                                        }
+                                    }}> {cell.render("Cell")} </td>
                                 ))}
                             </tr>
                         );
