@@ -3,6 +3,7 @@ import "./MainHeader.css";
 import UserService from "../../api/user/UserService";
 import {useNavigate} from "react-router-dom";
 import WeatcherServer from "../../api/pogoda/Pogoda";
+import {getClock, getWeekDay, times} from "../../utils/DateExtensions";
 
 const MainHeader = (preps) => {
     const navigate = useNavigate();
@@ -11,24 +12,24 @@ const MainHeader = (preps) => {
     const [userIcon, serUserIcon] = useState("")
     const [searchText, setSearchText] = useState("")
     const [weatcherTemp, setWeatcherTemp] = useState("")
+    const [textTimesWelcome, setTextTimesWelcome] = useState("")
+    const [weekDay, setWeekDay] = useState("")
+    const [clock, setClock] = useState("")
+
     useEffect(() => {
         getUser()
+        setTextTimesWelcome(times())
+        setWeekDay(getWeekDay())
+        setClock(getClock())
+
+        WeatcherServer.Pogoda().then((response) => {
+            setWeatcherTemp(Math.trunc(response.main.temp).toString())
+        })
     }, [])
 
     useEffect(() => {
         setSearchText(preps.searchText)
     }, [preps.searchText])
-
-    useEffect(() => {
-        WeatcherServer.Pogoda()
-        getUser()
-    }, [])
-    useEffect(() => {
-        WeatcherServer.Pogoda().then((response) => {
-            setWeatcherTemp(Math.trunc(response.main.temp).toString())
-        })
-        getUser()
-    }, [])
 
     async function getUser() {
         const response = await UserService.get()
@@ -78,9 +79,9 @@ const MainHeader = (preps) => {
                     </div>
 
                     <div className="topnav-item-right" style={{margin: "10px"}}>
-                        <b className="topnav-a">Доброе утро {userFirstName}</b>
-                        <b className="topnav-a" id="date-text">Ср</b>
-                        <b className="topnav-a" id="time-text">9:00</b>
+                        <b className="topnav-a">{textTimesWelcome + " " + userFirstName}</b>
+                        <b className="topnav-a" id="date-text">{weekDay}</b>
+                        <b className="topnav-a" id="time-text">{clock}</b>
                         <b >{weatcherTemp} °C</b>
                         <b className="topnav-a">ИСП-239</b>
 

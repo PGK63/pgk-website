@@ -24,3 +24,24 @@ export function getMonthValue(monthNumber) {
 
     return month[monthNumber]
 }
+
+export function times() {
+    const currentHour= new Date().getHours();
+
+    if(currentHour >=0 && currentHour <6)  return "Доброй ночи!"
+    else if (currentHour >=6 && currentHour <12) return "Доброе утро!"
+    else if (currentHour >=12 && currentHour <18)  return "Добрый день"
+    else  return "Добрый вечер"
+}
+export function getWeekDay() {
+    const date = new Date()
+    let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+
+    return days[date.getDay()];
+}
+export function getClock(){
+    const date = new Date(),
+        hours = (date.getHours() < 10) ? '0' + date.getHours() : date.getHours(),
+        minutes = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes()
+      return hours + ':' + minutes;
+}

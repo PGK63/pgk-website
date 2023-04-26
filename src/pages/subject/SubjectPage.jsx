@@ -7,6 +7,7 @@ import ErrorText from "../../components/ErrorText";
 import Loading from "../../components/Loading";
 import SubjectItem from "./components/SubjectItem";
 import SubjectsService from "../../api/subject/SubjectsService";
+import Modal from "../../components/modal/Modal";
 
 const SubjectsPage = () => {
     const [subjects, setSubjects] = useState([])
@@ -14,6 +15,7 @@ const SubjectsPage = () => {
     const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const lastElement = useRef()
+    const [showModal, setShowModal] = useState(false)
 
     const [fetchSubjects, isSubjectsLoading, subjectsError] = useFetching(async () => {
         const response = await SubjectsService.getAll(page);
@@ -35,10 +37,34 @@ const SubjectsPage = () => {
     return (
         <div>
             <MainHeader/>
+
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%"}}>
+                        <div style={{margin: "30px", textAlign:"center"}}>
+                    <h1 >Добавить предмет</h1>
+
+                    <div className="form-floating">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder=""
+                        />
+                        <label htmlFor="firstName">Название предмета</label>
+                    </div>
+
+                    <BaseButton>Добавить</BaseButton>
+                        </div></div>
+
+            </Modal>
+
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>
-                    <BaseButton>Добавить</BaseButton>
+                    <BaseButton onClick={() => setShowModal(true)}>Добавить</BaseButton>
                 </div>
                 {subjectsError &&
                     <ErrorText>{"Произошла ошибка \n " + subjectsError}</ErrorText>

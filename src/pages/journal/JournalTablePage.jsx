@@ -11,6 +11,8 @@ import BaseButton from "../../components/BaseButton";
 import Modal from "../../components/modal/Modal";
 import EvaluationItem from "./components/EvaluationItem";
 import RedButton from "../../components/RedButton";
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 const JournalTablePage = () => {
 
@@ -27,6 +29,7 @@ const JournalTablePage = () => {
     const [students, setStudents] = useState([])
     const [modal, setModal] = useState(false)
     const [journalRowItem, setJournalRowItem] = useState(null)
+    const [value, onChange] = useState(new Date());
 
     useEffect(() => {
         if(journalRowItem === null){
@@ -134,20 +137,31 @@ const JournalTablePage = () => {
                 { journalRowItem &&
                     <div style={{
                         justifyContent: "center",
-                        display: "flex"
+                        display: "flex",
+                        textAlign: "center"
                     }}>
                         <div>
                             <h1 style={{
                                 textAlign: "center",
                                 width: "100%"
                             }}>{UserService.getFIOFull(journalRowItem.student)}</h1>
+
+                            { journalRowItem.type === "add_row_date" &&
+                                <div className="Sample__container">
+                                    <main className="Sample__container__content">
+
+                                    <Calendar className= "calendar" onChange={onChange} value={value} />
+                                    </main>
+                                </div>
+                            }
+
                             { journalRowItem.type !== "add_row_date" &&
                                 <h1 style={{
                                     textAlign: "center",
                                     width: "100%"
                                 }}>{correctionDate(journalRowItem.date)}</h1>
                             }
-                            { journalRowItem.evaluation !== undefined &&
+                            { (journalRowItem.type === "add_evaluation" || journalRowItem.type === "update_evaluation") &&
                                 <div>
                                     <div style={{
                                         justifyContent: "center",
@@ -163,13 +177,15 @@ const JournalTablePage = () => {
                                     </div>
 
                                     <BaseButton onClick={() => deleteRow(journalRowItem.rowId)}>
-                                        Обновить оценку
+                                        {journalRowItem.evaluation !== "0" ? "Обновить оценку" : "Добавить оценку"}
                                     </BaseButton>
-
-                                    <RedButton onClick={() => deleteRow(journalRowItem.rowId)}>
-                                        Удалить оценку
-                                    </RedButton>
                                 </div>
+                            }
+
+                            { journalRowItem.evaluation !== "0" &&
+                                <RedButton onClick={() => deleteRow(journalRowItem.rowId)}>
+                                    Удалить оценку
+                                </RedButton>
                             }
                         </div>
                     </div>
@@ -212,7 +228,8 @@ const JournalTablePage = () => {
                                             setJournalRowItem({
                                                 type: "add_evaluation",
                                                 student: cell.row.original.student,
-                                                date: cell.column.id.replace("date_", "")
+                                                date: cell.column.id.replace("date_", ""),
+                                                evaluation: "0"
                                             })
                                         }else if(cell.value.length === 1 || cell.value === "H"){
                                             setJournalRowItem({
