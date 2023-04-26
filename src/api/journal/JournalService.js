@@ -139,6 +139,17 @@ export default class JournalService {
         return response.data
     }
 
+    static async topicDeleteRow(topicId) {
+        const response = await axios.delete(`https://api.cfif31.ru/pgk63/api/Journal/Subject/Topic/${topicId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
     static EvaluationCorrection(evaluation) {
         return evaluation.replace("HAS_", "")
     }
