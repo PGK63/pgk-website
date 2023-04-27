@@ -3,11 +3,12 @@ import AuthService from "../auth/AuthService";
 import BaseConstants from "../../utils/BaseConstants";
 
 export default class GroupService {
-    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE) {
+    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE, search = null) {
         const response = await axios.get("https://api.cfif31.ru/pgk63/api/Group", {
             params: {
                 "pageSize": pageSize,
-                "pageNumber": pageNumber
+                "pageNumber": pageNumber,
+                "search": search
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()

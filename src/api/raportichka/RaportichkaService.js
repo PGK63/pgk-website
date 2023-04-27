@@ -5,13 +5,13 @@ import AuthService from "../auth/AuthService";
 export default class RaportichkaService {
 
     static async getAll(
+        groupIds = null,
         pageNumber = 1,
         confirmation = null,
         onlyDate = null,
         startDate = null,
         endDate = null,
         raportichkaId = null,
-        groupIds = null,
         subjectIds = null,
         classroomTeacherIds = null,
         numberLessons = null,
