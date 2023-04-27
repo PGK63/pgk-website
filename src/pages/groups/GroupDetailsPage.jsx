@@ -70,9 +70,9 @@ const GroupDetailsPage = () => {
                                 justifyContent: "center"
                             }}>
                                 <b style={{fontSize:"25px", margin: "10px"}}>Добавить</b>
-                                <BaseButton onClick={() => navigate("/registration/student")}>Студент</BaseButton>
-                                <BaseButton onClick={() => navigate("/registration/headman")}>Староста</BaseButton>
-                                <BaseButton onClick={() => navigate("/registration/headmanDeputy")}>Зам Староста</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/student?groupId=" + groupId)}>Студент</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/headman?groupId=" + groupId)}>Староста</BaseButton>
+                                <BaseButton onClick={() => navigate("/registration/headmanDeputy?groupId=" + groupId)}>Зам Староста</BaseButton>
                             </div>
                         </div>
 

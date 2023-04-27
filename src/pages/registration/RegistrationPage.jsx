@@ -1,47 +1,40 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./RegistrationPage.css";
 import {Player} from "@lottiefiles/react-lottie-player";
 import MainHeader from "../../components/mainHeader/MainHeader";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import DirectorService from "../../api/director/DirectorService";
 import TeacherService from "../../api/teacher/TeacherService";
 import DepartmentHeadService from "../../api/departmentHead/DepartmentHeadService";
 import EducationalSectorService from "../../api/educationalSector/EducationalSectorService";
-import GroupService from "../../api/group/GroupService";
-import {useFetching} from "../../hooks/useFetching";
-import {useObserver} from "../../hooks/useObserver";
-import GroupItem from "../groups/components/GroupItem";
+import SearchBar from "../../components/searchBar/SearchBar";
+import StudentService from "../../api/student/StudentService";
+import HeadmanService from "../../api/headman/HeadmanService";
+import UserService from "../../api/user/UserService";
 
 function RegistrationPage() {
 
+    const location = useLocation()
     const role = useParams().role
+    const groupId = new URLSearchParams(location.search).get('groupId')
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [middleName, setMiddleName] = useState("")
     const [password, setPassword] = useState("")
     const [errorText, setErrorText] = useState("")
-    const [groups, setGroups] = useState([])
-    const [pageGroup, setPageGroup] = useState(1)
-    const [isLoading, setIsLoading] = useState(true)
-    const lastElement = useRef()
-
-    const [fetchGroups, isGroupLoading] = useFetching(async () => {
-        const response = await GroupService.getAll(pageGroup);
-        if(response != null){
-            setGroups([...groups, ...response.results])
-        }
-    })
-
-    useObserver(lastElement, true, isGroupLoading, () => {
-        setPageGroup(pageGroup + 1)
-    })
+    const [isLoading, setIsLoading] = useState(false)
+    const [studentSearch, setStudentSearch] = useState("")
+    const [student, setStudent] = useState(null)
+    const [students, setStudents] = useState([])
 
     useEffect(() => {
-        if(role === "student"){
-            fetchGroups()
+        if(role === "headman" || role === "headmanDeputy"){
+            StudentService.getAll(1, 50, groupId, studentSearch).then((r) => {
+                setStudents(r.results)
+            })
         }
-    }, [role, pageGroup])
-    
+    }, [studentSearch, role, groupId])
+
     function registration() {
         setErrorText("")
         setIsLoading(true)
@@ -78,8 +71,38 @@ function RegistrationPage() {
                 setErrorText("Произошла ошибка")
                 setIsLoading(false)
             })
+        }else if(role === "headman" || role === "headmanDeputy"){
+            if(student !== null){
+                if(role === "headman"){
+                    HeadmanService.registration(student.id).then((r) => {
+                        setPassword(r.passowrd)
+                        setIsLoading(false)
+                    }).catch((e) => {
+                        console.log(e)
+                        setErrorText("Произошла ошибка")
+                        setIsLoading(false)
+                    })
+                }else {
+                    HeadmanService.registrationDeputy(student.id).then((r) => {
+                        setPassword(r.passowrd)
+                        setIsLoading(false)
+                    }).catch(() => {
+                        setErrorText("Произошла ошибка")
+                        setIsLoading(false)
+                    })
+                }
+            }else {
+                setErrorText("Выберите студента")
+                setIsLoading(false)
+            }
         }else if(role === "student"){
-
+            StudentService.registration(firstName, lastName, middleName, groupId).then((r) => {
+                setPassword(r.passowrd)
+                setIsLoading(false)
+            }).catch((e) => {
+                setErrorText("Произошла ошибка")
+                setIsLoading(false)
+            })
         }
     }
 
@@ -118,7 +141,22 @@ function RegistrationPage() {
 
                         { role === "headman" || role === "headmanDeputy"
                             ? <div>
-
+                                <SearchBar
+                                    placeholder="Введите имя студента..."
+                                    searchText={studentSearch}
+                                    handleFilter={(v) => {setStudentSearch(v)}}
+                                    data={students}
+                                    dataResultVisibility={student !== null ? studentSearch.length !== 0 &&
+                                        UserService.getFIOFull(student).length !== studentSearch.length
+                                        : studentSearch.length !== 0}
+                                    item={(v) => {
+                                        return <p style={{
+                                            cursor: "pointer"
+                                        }} onClick={() => {
+                                            setStudent(v)
+                                            setStudentSearch(UserService.getFIOFull(v))
+                                        }}>{UserService.getFIOFull(v)}</p>
+                                    }}/>
                             </div>
                             : <div>
                                 <div className="form-floating">
@@ -155,26 +193,6 @@ function RegistrationPage() {
                                     />
                                     <label htmlFor="lastName">Отчество</label>
                                 </div>
-
-                                { role === "student" &&
-                                    <div>
-                                        <li style={{display: "flex"}}>{
-                                            groups.map(group =>
-                                                <ul style={{
-                                                    verticalAlign: "top",
-                                                    margin: "10px"
-                                                }}>
-                                                    <GroupItem group={group}/>
-                                                </ul>
-                                            )
-                                        }<ul style={{
-                                            verticalAlign: "top",
-                                            margin: "10px"
-                                        }}>
-                                            <div ref={lastElement} style={{width: 20}}/>
-                                        </ul></li>
-                                    </div>
-                                }
                             </div>
                         }
 
@@ -196,11 +214,8 @@ function RegistrationPage() {
                         }
                     </div>
                 }
+                <div style={{height: "100px"}}/>
             </div>
-
-            { role !== "student" &&
-                <div ref={lastElement} style={{height: 20}}/>
-            }
         </div>
     );
 }

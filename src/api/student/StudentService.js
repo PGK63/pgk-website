@@ -23,4 +23,23 @@ export default class StudentService {
         })
         return response.data
     }
+
+    static async registration(firstName, lastName, middleName, groupId) {
+
+        const data = JSON.stringify({
+            firstName: firstName,
+            lastName: lastName,
+            middleName: middleName,
+            groupId: Number(groupId)
+        })
+
+        const response = await axios.post("https://api.cfif31.ru/pgk63/api/Student/Registration", data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
 }
