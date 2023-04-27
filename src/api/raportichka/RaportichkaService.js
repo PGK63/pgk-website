@@ -75,4 +75,31 @@ export default class RaportichkaService {
 
         return response.data
     }
+
+    static async addRow(
+        raportichkaId,
+        numberLesson,
+        hours,
+        subjectId,
+        studentId,
+        teacherId
+    ) {
+
+        const data = JSON.stringify({
+            numberLesson: Number(numberLesson),
+            hours: Number(hours),
+            subjectId: Number(subjectId),
+            studentId: Number(studentId),
+            teacherId: Number(teacherId),
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Raportichka/${raportichkaId}/Row`,data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
 }

@@ -16,6 +16,7 @@ const RaportichkaTable = () => {
     const [raportichkaRows, setRaportichkaRows] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [rowItemId, setRowItemId] = useState(null)
+    const [groupId, setGroupId] = useState(0)
 
     useEffect(() => {
         if(rowItemId !== null){
@@ -32,6 +33,10 @@ const RaportichkaTable = () => {
     function getRaportichka() {
         RaportichkaService.getRowAll(raportichkaId).then((r) => {
             let rows = r.results
+
+            try {
+                setGroupId(rows[0].student.group.id)
+            }catch (e){}
 
             rows = rows.map((row) => {
                 return {
@@ -152,7 +157,7 @@ const RaportichkaTable = () => {
                                             const id = row.original.id
 
                                             if(id === 0)
-                                                navigate(`/raportichka/${raportichkaId}/table/row/add`)
+                                                navigate(`/raportichka/${raportichkaId}/table/row/add?groupId=${groupId}`)
                                             else
                                                 setRowItemId(id)
                                         }

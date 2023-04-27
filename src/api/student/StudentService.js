@@ -4,12 +4,18 @@ import BaseConstants from "../../utils/BaseConstants";
 
 export default class StudentService {
 
-    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE, groupIds = null) {
+    static async getAll(
+        pageNumber = 1,
+        pageSize = BaseConstants.PAGE_SIZE,
+        groupIds = null,
+        search = null
+    ) {
         const response = await axios.get("https://api.cfif31.ru/pgk63/api/Student", {
             params: {
                 "pageNumber": pageNumber,
                 "pageSize": pageSize,
-                "groupIds": groupIds
+                "groupIds": groupIds,
+                "search": search
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()

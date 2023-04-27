@@ -7,13 +7,15 @@ export default class SubjectsService {
     static async getAll(
         pageNumber = 1,
         teacherIds = null,
-        pageSize = BaseConstants.PAGE_SIZE
+        pageSize = BaseConstants.PAGE_SIZE,
+        search = null
     ) {
         const response = await axios.get("https://api.cfif31.ru/pgk63/api/Subject", {
             params: {
                 "pageNumber": pageNumber,
                 "pageSize": pageSize,
-                "teacherIds": teacherIds
+                "teacherIds": teacherIds,
+                "search": search
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()
