@@ -40,7 +40,6 @@ const RaportichkaListPage = () => {
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Рапортички (" + totalCount + ")"}</h1>
                     <BaseButton>Сортировать</BaseButton>
-                    <BaseButton>Добавить</BaseButton>
                 </div>
 
                 {raportichkaError &&

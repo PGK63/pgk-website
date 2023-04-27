@@ -26,6 +26,16 @@ export default class GroupService {
         return response.data
     }
 
+    static async createRaportichka(groupId) {
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Group/${groupId}/Raportichka`, null, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
     static getName(group) {
         return group.speciality.nameAbbreviation + "-" + group.course + group.number
     }
