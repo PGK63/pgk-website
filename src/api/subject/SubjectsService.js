@@ -22,7 +22,21 @@ export default class SubjectsService {
             }
         })
 
-        console.log(response)
+        return response.data
+    }
+
+    static async create(subjectTitle) {
+
+        const data = JSON.stringify({
+            subjectTitle: subjectTitle
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Subject`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
 
         return response.data
     }

@@ -8,6 +8,7 @@ import Loading from "../../components/Loading";
 import SubjectItem from "./components/SubjectItem";
 import SubjectsService from "../../api/subject/SubjectsService";
 import Modal from "../../components/modal/Modal";
+import modal from "../../components/modal/Modal";
 
 const SubjectsPage = () => {
     const [subjects, setSubjects] = useState([])
@@ -16,6 +17,7 @@ const SubjectsPage = () => {
     const [page, setPage] = useState(1)
     const lastElement = useRef()
     const [showModal, setShowModal] = useState(false)
+    const [subjectTitle, setSubjectTitle] = useState("")
 
     const [fetchSubjects, isSubjectsLoading, subjectsError] = useFetching(async () => {
         const response = await SubjectsService.getAll(page);
@@ -32,7 +34,19 @@ const SubjectsPage = () => {
 
     useEffect(() => {
         fetchSubjects()
-    }, [page])
+    }, [page, showModal])
+
+    function createSubject() {
+        if(subjectTitle !== ""){
+            SubjectsService.create(subjectTitle).then((r) => {
+                setSubjects([])
+                setTotalPages(0)
+                setTotalCount(0)
+                setPage(1)
+                setShowModal(false)
+            })
+        }
+    }
 
     return (
         <div>
@@ -43,21 +57,29 @@ const SubjectsPage = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "100%"}}>
-                        <div style={{margin: "30px", textAlign:"center"}}>
-                    <h1 >Добавить предмет</h1>
+                    height: "100%"}
+                }>
+                    <div style={{textAlign:"center"}}>
+                        <h1 style={{marginTop: "35px", marginBottom: "20px"}}>Добавить предмет</h1>
 
-                    <div className="form-floating">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder=""
-                        />
-                        <label htmlFor="firstName">Название предмета</label>
-                    </div>
+                        <div className="form-floating">
+                            <input
+                                type="text"
+                                id="subjectTitle"
+                                className="form-control"
+                                placeholder="Название предмета"
+                                value={subjectTitle}
+                                onChange={event => setSubjectTitle(event.target.value)}
+                            />
 
-                    <BaseButton>Добавить</BaseButton>
-                        </div></div>
+                            <label htmlFor="subjectTitle">Название предмета</label>
+                        </div>
+
+                            <div style={{marginTop: "10px"}}>
+                                <BaseButton onClick={createSubject}>Добавить</BaseButton>
+                            </div>
+                        </div>
+                </div>
 
             </Modal>
 
