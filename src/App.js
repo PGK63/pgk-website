@@ -24,6 +24,7 @@ import SettingsTelegram from "./pages/settingsTelegram/SettingsTelegram";
 import CreateJournalPage from "./pages/journal/CreateJournalPage";
 import JournalCreateTopicPage from "./pages/journal/JournalCreateTopicPage";
 import JournalCreateSubjectPage from "./pages/journal/JournalCreateSubjectPage";
+import CreateSpecialityPage from "./pages/speciality/CreateSpecialityPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/groups/:id/journal/create" element={<CreateJournalPage/>}/>
             <Route path="/students" element={<StudentsPage/>}/>
             <Route path="/specialties" element={<SpecialtiesPage/>}/>
+            <Route path="/specialties/create" element={<CreateSpecialityPage/>}/>
             <Route path="/subjects" element={<SubjectsPage/>}/>
             <Route path="/departments" element={<DepartmentsPage/>}/>
             <Route path="/journals" element={<JournalsPage/>}/>

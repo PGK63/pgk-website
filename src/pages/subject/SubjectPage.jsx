@@ -8,7 +8,6 @@ import Loading from "../../components/Loading";
 import SubjectItem from "./components/SubjectItem";
 import SubjectsService from "../../api/subject/SubjectsService";
 import Modal from "../../components/modal/Modal";
-import modal from "../../components/modal/Modal";
 
 const SubjectsPage = () => {
     const [subjects, setSubjects] = useState([])
