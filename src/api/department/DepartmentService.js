@@ -19,6 +19,23 @@ export default class DepartmentService {
                 "Authorization": "Bearer " + await AuthService.getToken()
             }
         })
+
+        return response.data
+    }
+
+    static async create(name, departmentHeadId) {
+        const data = JSON.stringify({
+            name: name,
+            departmentHeadId: Number(departmentHeadId),
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Department`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
         return response.data
     }
 }

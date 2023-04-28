@@ -26,6 +26,7 @@ import JournalCreateTopicPage from "./pages/journal/JournalCreateTopicPage";
 import JournalCreateSubjectPage from "./pages/journal/JournalCreateSubjectPage";
 import CreateSpecialityPage from "./pages/speciality/CreateSpecialityPage";
 import CreateGroupPage from "./pages/groups/CreateGroupPage";
+import CreateDepartmentPage from "./pages/department/CreateDepartmentPage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/specialties/create" element={<CreateSpecialityPage/>}/>
             <Route path="/subjects" element={<SubjectsPage/>}/>
             <Route path="/departments" element={<DepartmentsPage/>}/>
+            <Route path="/departments/create" element={<CreateDepartmentPage/>}/>
             <Route path="/journals" element={<JournalsPage/>}/>
             <Route path="/journals/:journalId/subjects" element={<JournalSubjectsPage/>}/>
             <Route path="/journals/:journalId/subjects/create" element={<JournalCreateSubjectPage/>}/>

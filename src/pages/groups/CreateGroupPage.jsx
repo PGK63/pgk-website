@@ -47,8 +47,10 @@ const CreateGroupPage = () => {
     }, [teacherSearch])
 
     function createGroup() {
-        GroupService.create(course, number, speciality.id, department.id, teacher.id)
-            .then((r) => navigate(`/groups/${r.id}`))
+        if(speciality !== null && department !== null && teacher !== null){
+            GroupService.create(course, number, speciality.id, department.id, teacher.id)
+                .then((r) => navigate(`/groups/${r.id}`))
+        }
     }
 
     return (
