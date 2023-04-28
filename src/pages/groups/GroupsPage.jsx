@@ -7,8 +7,10 @@ import {useFetching} from "../../hooks/useFetching";
 import {useObserver} from "../../hooks/useObserver";
 import ErrorText from "../../components/ErrorText";
 import Loading from "../../components/Loading";
+import {useNavigate} from "react-router-dom";
 
 const GroupsPage = () => {
+    const navigate = useNavigate()
     const [groups, setGroups] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
@@ -38,7 +40,7 @@ const GroupsPage = () => {
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Группы (" + totalCount + ")"}</h1>
-                    <BaseButton>Добавить</BaseButton>
+                    <BaseButton onClick={() => navigate("/groups/create")}>Добавить</BaseButton>
                 </div>
 
                 {groupsError &&

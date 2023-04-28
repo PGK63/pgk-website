@@ -37,6 +37,25 @@ export default class GroupService {
         return response.data
     }
 
+    static async create(course, number, specialityId, departmentId, classroomTeacherId) {
+        const data = JSON.stringify({
+            course: Number(course),
+            number: Number(number),
+            specialityId: Number(specialityId),
+            departmentId: Number(departmentId),
+            classroomTeacherId: Number(classroomTeacherId),
+        })
+
+        const response = await axios.post(`https://api.cfif31.ru/pgk63/api/Group`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
     static getName(group) {
         return group.speciality.nameAbbreviation + "-" + group.course + group.number
     }

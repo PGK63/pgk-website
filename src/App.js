@@ -25,6 +25,7 @@ import CreateJournalPage from "./pages/journal/CreateJournalPage";
 import JournalCreateTopicPage from "./pages/journal/JournalCreateTopicPage";
 import JournalCreateSubjectPage from "./pages/journal/JournalCreateSubjectPage";
 import CreateSpecialityPage from "./pages/speciality/CreateSpecialityPage";
+import CreateGroupPage from "./pages/groups/CreateGroupPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/auth" element={<AuthPage/>}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/groups" element={<GroupsPage/>}/>
+            <Route path="/groups/create" element={<CreateGroupPage/>}/>
             <Route path="/groups/:id" element={<GroupDetailsPage/>}/>
             <Route path="/groups/:id/journal/create" element={<CreateJournalPage/>}/>
             <Route path="/students" element={<StudentsPage/>}/>
