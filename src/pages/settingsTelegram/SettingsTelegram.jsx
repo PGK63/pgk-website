@@ -1,15 +1,24 @@
 import React from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
+import {Player} from "@lottiefiles/react-lottie-player";
+import {useNavigate} from "react-router-dom";
+
+
 
 const SettingsTelegram = () => {
+    const navigate = useNavigate()
     return (
         <div>
             <MainHeader/>
             <div className="content">
-            <h1 style={{textAlign: "center",margin: "100px"}}>Телеграм</h1>
-                {/*СЮДА АНИМАЦИЮ БЛЯТЬ ВПИХНИ*/}
-                <h4 style={{textAlign: "center",margin: "100px"}}>Если вы забудете пароль, вы сможете  изменить пароль с помощью нашего телеграм бота</h4>
-                <h4 style={{textAlign: "center",margin: "100px"}}>ссылка</h4>
+            <h1 style={{textAlign: "center",padding: "100px"}}>Телеграм</h1>
+                <Player
+                    autoplay={true}
+                    src="https://assets8.lottiefiles.com/packages/lf20_xhlbndhm.json"
+                    style={{ height: '400px', width: '400px'}}/>
+                <h4 style={{textAlign: "center",margin: "10px"}}>Если вы забудете пароль, вы сможете  изменить пароль с помощью нашего телеграм бота</h4>
+                <h2 style={{textAlign: "center",margin: "30px", color: "#205798", textDecoration: "underline"}} onClick={() => window.open("https://t.me/pgk63_bot", "_blank")}>ссылка</h2>
+
 
 
 

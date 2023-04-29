@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import MainHeader from "../../components/mainHeader/MainHeader";
 import UserService from "../../api/user/UserService";
 import BaseButton from "../../components/BaseButton";
+import {useNavigate} from "react-router-dom";
 
 const ProfilePage = () => {
 
     const [userIcon, serUserIcon] = useState("")
     const [newUserIcon, setNewUserIcon] = useState(null)
     const [user, setUser] = useState()
+    const navigate = useNavigate()
 
     useEffect( () => {
         getUser()
@@ -61,7 +63,7 @@ const ProfilePage = () => {
                     <button onClick={updateUserPhoto} className="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Изменить фото</button>
                 </div>
                     <div style={{margin: "30px", width: "100%", display: "flex",justifyContent: "center"}}>
-                <BaseButton>Telegram-бот добавлен</BaseButton></div>
+                <BaseButton onClick={() => navigate("/settings/telegram")}>Telegram-бот добавлен</BaseButton></div>
             </div>
         </div>
     );

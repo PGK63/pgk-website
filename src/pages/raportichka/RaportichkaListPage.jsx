@@ -104,7 +104,7 @@ const RaportichkaListPage = () => {
                                 setTotalCount(0)
                                 setModal(false)
                                 setFilter(false)
-                            }}>Сбросить филтр</BaseButton>
+                            }}>Сбросить фильтр</BaseButton>
                         </div>
                     </div>
                 </div>

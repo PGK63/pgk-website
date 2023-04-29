@@ -8,6 +8,7 @@ const JournalSubjectItem = (preps) => {
     const journalId = preps.journalId
     const groupId = preps.groupId
 
+
     const url = `/journals/${journalId}/subjects/${journalSubject.id}/table?groupId=${groupId}&maxHours=${journalSubject.hours}&subjectTitle=${journalSubject.subject.subjectTitle}`
 
     return (

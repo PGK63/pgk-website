@@ -10,7 +10,7 @@ const JournalItem = (preps) => {
     return (
         <div style={{
             padding: "15px",
-            background: "#19b2e6",
+            background: "#205798",
             borderRadius: "15px",
             height: "300px",
             width: "200px",

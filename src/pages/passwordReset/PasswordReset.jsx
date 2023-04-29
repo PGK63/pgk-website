@@ -61,7 +61,7 @@ const PasswordReset = () => {
                         style={{ height: '400px', width: '400px'}}/>
 
                     <h4 style={{margin: "5px"}}>Восстановление пароля по почте</h4>
-                    <h5 style={{margin: "15px"}}>Вам на Email придёт ссылка, перейдя по ней вы увидете свой пароль</h5>
+                    <h5 style={{margin: "15px"}}>Вам на Email придёт ссылка, перейдя по ней вы увидите свой пароль</h5>
 
                     {errorMessage &&
                         <h5 style={{color: "red"}}>{errorMessage}</h5>
@@ -104,7 +104,7 @@ const PasswordReset = () => {
             <div className="split right">
                 <div className="centered">
                     <img style={{  width: "400px" }} src="https://api.cfif31.ru/pgk63/api/Image/telegram_bot_qrcode.png" alt="Avatar man"/>
-                    <p style={{color:"white"}}> <h4 >Ввостановление через телеграм</h4></p>
+                    <p style={{color:"white"}}> <h4 >Восстановление через телеграм</h4></p>
                     <p style={{color:"white"}}> <h5>1. Осканируйте Qr code</h5></p>
                     <p style={{color:"white"}}> <h5>2. Отправьте в чат с ботом сообщение /password_reset</h5></p>
                 </div>
