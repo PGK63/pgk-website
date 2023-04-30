@@ -139,7 +139,7 @@ const MainHeader = (preps) => {
                         <img className="nav-item-icon" src={require("../../resources/icons/subject.png")}/>
                         <span className="nav-item">Предмет</span>
                     </a></li>
-                    <li className="nav-li"><a href="#">
+                    <li className="nav-li"><a href={`/settings`}>
                         <img className="nav-item-icon" src={require("../../resources/icons/settings.png")}/>
                         <span className="nav-item">Настройки</span>
                     </a></li>

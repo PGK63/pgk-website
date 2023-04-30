@@ -28,6 +28,7 @@ import JournalCreateTopicPage from "../pages/journal/JournalCreateTopicPage";
 import RegistrationPage from "../pages/registration/RegistrationPage";
 import AddRaportichkaRowPage from "../pages/raportichka/AddRaportichkaRowPage";
 import SettingsEmail from "../pages/settingsEmail/SettingsEmail";
+import SettingsPage from "../pages/settings/SettingsPage";
 
 export const privateRoutes = [
     <Route path="/" element={<MainPage/>}/>,
@@ -37,6 +38,7 @@ export const privateRoutes = [
     <Route path="/search" element={<SearchPage/>}/>,
     <Route path="/settings/telegram" element={<SettingsTelegram/>}/>,
     <Route path="/settings/email" element={<SettingsEmail/>}/>,
+    <Route path="/settings" element={<SettingsPage/>}/>,
     <Route path="/subjects" element={<SubjectsPage/>}/>,
     <Route path="/departments" element={<DepartmentsPage/>}/>,
     <Route path="/journals" element={<JournalsPage/>}/>,

@@ -12,6 +12,7 @@ import SpecialityItem from "../speciality/components/SpecialityItem";
 import UserService from "../../api/user/UserService";
 import {UserRole} from "../../api/user/model/UserRole";
 import HeadmanService from "../../api/headman/HeadmanService";
+import {HistoryType} from "../../api/user/model/HistoryType";
 
 const GroupDetailsPage = () => {
 
@@ -29,6 +30,18 @@ const GroupDetailsPage = () => {
         setUser(UserService.getLocalUser())
     }, [])
 
+    useEffect(() => {
+        if(group !== null && group !== undefined){
+            console.log(group)
+            UserService.postHistoryItem(
+                groupId,
+                GroupService.getName(group),
+                null,
+                HistoryType.GROUP
+            )
+        }
+    }, [group])
+
     function createRaportichka() {
         if(user !== null){
             if(user.userRole === UserRole.headman || user.userRole === UserRole.deputyHeadman) {
@@ -45,6 +58,7 @@ const GroupDetailsPage = () => {
 
     async function getGroupsDetails() {
         try {
+            setErrorText("")
             const response = await GroupService.getById(groupId)
             setGroup(response)
         }catch (e) {

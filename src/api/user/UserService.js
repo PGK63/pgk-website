@@ -1,5 +1,6 @@
 import axios from "axios";
 import AuthService from "../auth/AuthService";
+import BaseConstants from "../../utils/BaseConstants";
 
 export default class UserService {
 
@@ -79,6 +80,44 @@ export default class UserService {
                 "Authorization": "Bearer " + await AuthService.getToken()
             }
         }))
+    }
+
+    static async getHistory(
+        page
+    ) {
+        const response = await axios.get("https://api.cfif31.ru/pgk63/api/User/History", {
+            params: {
+                pageNumber: page,
+                pageSize: BaseConstants.PAGE_SIZE
+            },
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
+    static async postHistoryItem(
+        contentId,
+        title,
+        description,
+        type
+    ) {
+
+        const data = JSON.stringify({
+            contentId: Number(contentId),
+            title: title,
+            description: description,
+            type: type
+        })
+
+        return await axios.post("https://api.cfif31.ru/pgk63/api/User/History", data, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken(),
+                'content-type': 'application/json'
+            }
+        })
     }
 
     static getLocalUser() {
