@@ -1,21 +1,43 @@
-import React from 'react';
-import MainHeader from "../../components/mainHeader/MainHeader";
+import React, {useEffect, useState} from 'react';
 import {Player} from "@lottiefiles/react-lottie-player";
-import {useNavigate} from "react-router-dom";
-
-
+import BaseButton from "../../components/BaseButton";
+import UserService from "../../api/user/UserService";
 
 const SettingsTelegram = () => {
+
+    const [telegramToken, setTelegramToken] = useState("")
+
+    useEffect(() => {
+        UserService.getTelegramToken().then(r => {
+            setTelegramToken(r)
+        })
+    }, [])
+
     return (
         <div>
             <div className="content">
-            <h1 style={{textAlign: "center",padding: "100px"}}>Телеграм</h1>
+                <h1 style={{textAlign: "center", marginTop: "40px"}}>Телеграм бот</h1>
+
                 <Player
                     autoplay={true}
-                    src="https://assets8.lottiefiles.com/packages/lf20_xhlbndhm.json"
-                    style={{ height: '400px', width: '400px'}}/>
+                    loop={true}
+                    controls={true}
+                    src="https://assets4.lottiefiles.com/temp/lf20_Pn8REz.json"
+                    style={{ height: '250px', width: '250px', marginTop: '40px'}}/>
+
+
                 <h4 style={{textAlign: "center",margin: "10px"}}>Если вы забудете пароль, вы сможете  изменить пароль с помощью нашего телеграм бота</h4>
-                <h2 style={{textAlign: "center",margin: "30px", color: "#205798", textDecoration: "underline"}} onClick={() => window.open("https://t.me/pgk63_bot", "_blank")}>ссылка</h2>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                    marginTop: "15px"
+                }}>
+                    <BaseButton onClick={
+                        () =>
+                            window.open(`https://t.me/pgk63_bot?start=${telegramToken}`, "_blank")
+                    }>Авторезироваться</BaseButton>
+                </div>
             </div>
         </div>
     );

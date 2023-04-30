@@ -17,6 +17,20 @@ export default class UserService {
         }
     }
 
+    static async getTelegramToken() {
+        try {
+            const response = await axios.get("https://api.cfif31.ru/pgk63/api/User/Telegram/Token", {
+                headers: {
+                    "Authorization": "Bearer " + await AuthService.getToken()
+                }
+            })
+
+            return response.data
+        }catch (e){
+            console.log(e)
+        }
+    }
+
     static async updatePhoto(photo) {
 
         const formData = new FormData();
