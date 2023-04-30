@@ -3,12 +3,17 @@ import AuthService from "../auth/AuthService";
 import BaseConstants from "../../utils/BaseConstants";
 
 export default class DirectorService {
-    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE) {
+    static async getAll(
+        pageNumber = 1,
+        search = null,
+        pageSize = BaseConstants.PAGE_SIZE
+    ) {
         const response = await axios.get("https://api.cfif31.ru/pgk63/api/Director", {
             params: {
                 "pageSize": pageSize,
                 "pageNumber": pageNumber,
-                "current": true
+                "current": true,
+                "search": search
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()

@@ -15,7 +15,7 @@ export default class StudentService {
                 "pageNumber": pageNumber,
                 "pageSize": pageSize,
                 "groupIds": groupIds,
-                "search": search
+                "search": search // === "" || search === " " ? null : search
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()

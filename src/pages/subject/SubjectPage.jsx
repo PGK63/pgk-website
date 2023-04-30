@@ -8,8 +8,10 @@ import Loading from "../../components/Loading";
 import SubjectItem from "./components/SubjectItem";
 import SubjectsService from "../../api/subject/SubjectsService";
 import Modal from "../../components/modal/Modal";
+import BaseConstants from "../../utils/BaseConstants";
+import EmptyListUi from "../../components/EmptyListUi";
 
-const SubjectsPage = () => {
+const SubjectsPage = (preps) => {
     const [subjects, setSubjects] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
@@ -17,13 +19,25 @@ const SubjectsPage = () => {
     const lastElement = useRef()
     const [showModal, setShowModal] = useState(false)
     const [subjectTitle, setSubjectTitle] = useState("")
+    const [isSearch, setIsSearch] = useState(false)
+    const search = preps.search
 
     const [fetchSubjects, isSubjectsLoading, subjectsError] = useFetching(async () => {
-        const response = await SubjectsService.getAll(page);
+        const response = await SubjectsService.getAll(page, null,BaseConstants.PAGE_SIZE ,search);
         if(response != null){
             setTotalPages(response.totalPages)
             setTotalCount(response.totalCount)
-            setSubjects([...subjects, ...response.results])
+
+            if(isSearch){
+                setPage(1)
+            }
+
+            if(page === 1 && search !== null){
+                setSubjects([])
+                setSubjects([...response.results])
+            }else {
+                setSubjects([...subjects, ...response.results])
+            }
         }
     })
 
@@ -32,8 +46,32 @@ const SubjectsPage = () => {
     })
 
     useEffect(() => {
-        fetchSubjects()
+        if(page === 1 && search !== null){
+            // console.log(search)
+        }else {
+            fetchSubjects()
+        }
     }, [page, showModal])
+
+    useEffect(() => {
+        searchUpdateData()
+    }, [search])
+
+    useEffect(() => {
+        if(isSearch){
+            fetchSubjects().then(() => setIsSearch(false))
+        }
+    }, [isSearch])
+
+    async function searchUpdateData() {
+        if(search !== null && search !== ""){
+            setIsSearch(true)
+            setTotalCount(0)
+            setTotalPages(0)
+            setSubjects([])
+            setPage(1)
+        }
+    }
 
     function createSubject() {
         if(subjectTitle !== ""){
@@ -81,15 +119,22 @@ const SubjectsPage = () => {
             </Modal>
 
             <div className="content">
-                <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
-                    <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>
-                    <BaseButton onClick={() => setShowModal(true)}>Добавить</BaseButton>
-                </div>
+                { search === undefined &&
+                    <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
+                        <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>
+                        <BaseButton onClick={() => setShowModal(true)}>Добавить</BaseButton>
+                    </div>
+                }
+
                 {subjectsError &&
                     <ErrorText>{"Произошла ошибка \n " + subjectsError}</ErrorText>
                 }
                 {isSubjectsLoading &&
                     <Loading/>
+                }
+
+                {(!isSubjectsLoading && subjectsError === "" && subjects.length === 0) &&
+                    <EmptyListUi/>
                 }
 
                 <li style={{margin: "0 auto", textAlign: "center"}}>{

@@ -1,14 +1,19 @@
-import React, {useEffect, useRef, useState} from 'react';
-import MainHeader from "../../components/mainHeader/MainHeader";
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {SearchType} from "./model/SearchType";
+import StudentsPage from "../student/StudentsPage";
+import DepartmentsPage from "../department/DepartmentsPage";
+import GroupsPage from "../groups/GroupsPage";
+import SpecialityPage from "../speciality/SpecialityPage";
+import SubjectsPage from "../subject/SubjectPage";
+import GuidePaige from "../guide/GuidePaige";
+
 const SearchPage = () =>
 {
     const location = useLocation()
     const searchTextParams = new URLSearchParams(location.search).get('searchText')
     const [searchText, setSearchText] = useState("")
     const [searchType, setSearchType] = useState(SearchType[0])
-    const lastElement = useRef()
 
     useEffect(() => {
         setSearchText(searchTextParams)
@@ -16,7 +21,6 @@ const SearchPage = () =>
 
     return (
         <div>
-            {/*<MainHeader searchText={searchText}/>*/}
             <div className="content">
                 <div style={{
                     display: "flex"
@@ -38,7 +42,14 @@ const SearchPage = () =>
                     })}
                 </div>
             </div>
-            <div ref={lastElement} style={{height: 20}}/>
+
+            {searchType.id === "STUDENT" && <StudentsPage search={searchText}/>}
+            {searchType.id === "DEPARTMENT" && <DepartmentsPage search={searchText}/>}
+            {searchType.id === "GROUP" && <GroupsPage search={searchText}/>}
+            {searchType.id === "SPECIALITY" && <SpecialityPage search={searchText}/>}
+            {searchType.id === "SUBJECT" && <SubjectsPage search={searchText}/>}
+            {searchType.id === "DEPARTMENT_HEAD" && <GuidePaige search={searchText} teacherVisibility={false} directorVisibility={false}/>}
+            {searchType.id === "TEACHER" && <GuidePaige search={searchText} departmentHeadVisibility={false} directorVisibility={false}/>}
         </div>
     );
 };

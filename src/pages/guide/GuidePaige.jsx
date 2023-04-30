@@ -9,8 +9,9 @@ import DepartmentHeadService from "../../api/departmentHead/DepartmentHeadServic
 import TeacherService from "../../api/teacher/TeacherService";
 import Modal from "../../components/modal/Modal";
 import {useNavigate} from "react-router-dom";
+import BaseConstants from "../../utils/BaseConstants";
 
-const GuidePaige = () => {
+const GuidePaige = (preps) => {
 
     const navigate = useNavigate()
     const [directors, setDirectors] = useState([])
@@ -25,30 +26,66 @@ const GuidePaige = () => {
     const [page, setPage] = useState(1)
     const lastElement = useRef()
     const [modalShow, setModalShow] = useState(false)
+    const directorVisibility = preps.directorVisibility === undefined ? true : preps.directorVisibility
+    const teacherVisibility = preps.teacherVisibility === undefined ? true : preps.teacherVisibility
+    const departmentHeadVisibility = preps.departmentHeadVisibility === undefined ? true : preps.departmentHeadVisibility
+    const search = preps.search
+    const [isSearch, setIsSearch] = useState(false)
 
     const [fetchDirectors, isDirectorsLoading] = useFetching(async () => {
-        const response = await DirectorService.getAll(page);
+        const response = await DirectorService.getAll(page, search);
         if(response != null){
             setDirectorTotalPages(response.totalPages)
             setDirecotorTotalCount(response.totalCount)
-            setDirectors([...directors, ...response.results])
+
+            if(isSearch){
+                setPage(1)
+            }
+
+            if(page === 1 && search !== null){
+                setDirectors([])
+                setDirectors([...response.results])
+            }else {
+                setDirectors([...directors, ...response.results])
+            }
         }
     })
+
     const [fetchDepartmentHead] = useFetching(async () => {
-        const response = await DepartmentHeadService.getAll(page);
+        const response = await DepartmentHeadService.getAll(page, BaseConstants.PAGE_SIZE, search);
         if(response != null){
             setDepartmentHeadTotalPages(response.totalPages)
             setDepartmentHeadTotalCount(response.totalCount)
-            setDepartmentHead([...departmentHead, ...response.results])
+
+            if(isSearch){
+                setPage(1)
+            }
+
+            if(page === 1 && search !== null){
+                setDepartmentHead([])
+                setDepartmentHead([...response.results])
+            }else {
+                setDepartmentHead([...departmentHead, ...response.results])
+            }
         }
     })
 
     const [fetchTeachers] = useFetching(async () => {
-        const response = await TeacherService.getAll(page);
+        const response = await TeacherService.getAll(page, BaseConstants.PAGE_SIZE, search);
         if(response != null){
             setTeacherTotalPages(response.totalPages)
             setTecherTotalCount(response.totalCount)
-            setTeachers([...techers, ...response.results])
+
+            if(isSearch){
+                setPage(1)
+            }
+
+            if(page === 1 && search !== null){
+                setTeachers([])
+                setTeachers([...response.results])
+            }else {
+                setTeachers([...techers, ...response.results])
+            }
         }
     })
 
@@ -59,10 +96,50 @@ const GuidePaige = () => {
     })
 
     useEffect(() => {
-        fetchDirectors()
-        fetchDepartmentHead()
-        fetchTeachers()
+        if(page === 1 && search !== null){
+            // console.log(search)
+        }else {
+            fetchDirectors()
+            fetchDepartmentHead()
+            fetchTeachers()
+        }
     }, [page])
+
+    useEffect(() => {
+        searchUpdateData()
+    }, [search])
+
+    useEffect(() => {
+        if(isSearch){
+            fetchTeachers().then(() => {
+                fetchDepartmentHead().then(() => {
+                    fetchDirectors().then(() => {
+                        setIsSearch(false)
+                    })
+                })
+            })
+        }
+    }, [isSearch])
+
+    async function searchUpdateData() {
+        if(search !== null && search !== ""){
+            setIsSearch(true)
+
+            setDirecotorTotalCount(0)
+            setDirectorTotalPages(0)
+            setDirectors([])
+
+            setTecherTotalCount(0)
+            setTeacherTotalPages(0)
+            setTeachers([])
+
+            setDepartmentHeadTotalCount(0)
+            setDepartmentHeadTotalPages(0)
+            setTeachers([])
+
+            setPage(1)
+        }
+    }
 
     function registration(role) {
         navigate(`/registration/${role}`)
@@ -102,34 +179,42 @@ const GuidePaige = () => {
             </Modal>
 
             <div className="content">
-                <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
-                    <h1 style={{fontWeight: "bold"}}>{"Руководство (" + (direcotorTotalCount + teacherTotalCount + departmentHeadTotalCount) + ")"}</h1>
-                    <BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>
-                </div>
+                {search === undefined &&
+                    <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
+                        <h1 style={{fontWeight: "bold"}}>{"Руководство (" + (direcotorTotalCount + teacherTotalCount + departmentHeadTotalCount) + ")"}</h1>
+                        <BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>
+                    </div>
+                }
 
-                <li style={{margin: "0 auto", textAlign: "center"}}>{
-                    directors.map(director =>
-                        <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
-                            <GuideItem role="Директор" quide={director}/>
-                        </ul>
-                    )
-                }</li>
+                {directorVisibility &&
+                    <li style={{margin: "0 auto", textAlign: "center"}}>{
+                        directors.map(director =>
+                            <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
+                                <GuideItem role="Директор" quide={director}/>
+                            </ul>
+                        )
+                    }</li>
+                }
 
-                <li style={{margin: "80px auto", textAlign: "center"}}>{
-                    departmentHead.map(departmentHead =>
-                        <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
-                            <GuideItem role="Заведующий отделением" quide={departmentHead}/>
-                        </ul>
-                    )
-                }</li>
+                {departmentHeadVisibility &&
+                    <li style={{margin: "80px auto", textAlign: "center"}}>{
+                        departmentHead.map(departmentHead =>
+                            <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
+                                <GuideItem role="Заведующий отделением" quide={departmentHead}/>
+                            </ul>
+                        )
+                    }</li>
+                }
 
-                <li style={{margin: "0 auto", textAlign: "center"}}>{
-                    techers.map(teacher =>
-                        <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
-                            <GuideItem role="Преподаватель" quide={teacher}/>
-                        </ul>
-                    )
-                }</li>
+                {teacherVisibility &&
+                    <li style={{margin: "0 auto", textAlign: "center"}}>{
+                        techers.map(teacher =>
+                            <ul style={{display: "inline-block", verticalAlign: "top", margin: "10px"}}>
+                                <GuideItem role="Преподаватель" quide={teacher}/>
+                            </ul>
+                        )
+                    }</li>
+                }
 
                 <div ref={lastElement} style={{height: 20}}/>
             </div>
