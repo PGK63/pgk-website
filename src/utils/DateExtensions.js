@@ -35,7 +35,7 @@ export function times() {
 }
 export function getWeekDay() {
     const date = new Date()
-    let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
+    let days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
     return days[date.getDay()];
 }

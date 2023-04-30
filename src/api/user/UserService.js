@@ -62,6 +62,25 @@ export default class UserService {
             })
     }
 
+    static async updateEmail(email) {
+        return (await axios.patch("https://api.cfif31.ru/pgk63/api/User/Email", null, {
+            params: {
+                newEmail: email
+            },
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })).data
+    }
+
+    static async sendEmailVerification() {
+        return (await axios.post("https://api.cfif31.ru/pgk63/api/User/Email/Verification", null, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        }))
+    }
+
     static getLocalUser() {
         return JSON.parse(localStorage.getItem("user"))
     }

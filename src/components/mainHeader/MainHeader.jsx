@@ -20,7 +20,10 @@ const MainHeader = (preps) => {
         getUser()
         setTextTimesWelcome(times())
         setWeekDay(getWeekDay())
-        setClock(getClock())
+
+        setInterval(() => {
+            setClock(getClock())
+        }, 1000)
 
         WeatcherServer.Pogoda().then((response) => {
             setWeatcherTemp(Math.trunc(response.main.temp).toString())
@@ -78,13 +81,17 @@ const MainHeader = (preps) => {
                         >Поиск</button>
                     </div>
 
-                    <div className="topnav-item-right" style={{margin: "10px"}}>
-                        <b className="topnav-a">{textTimesWelcome + " " + userFirstName}</b>
-                        <b className="topnav-a" id="date-text">{weekDay}</b>
-                        <b className="topnav-a" id="time-text">{clock}</b>
-                        <b >{weatcherTemp} °C</b>
-                        <b className="topnav-a">ИСП-239</b>
-
+                    <div className="topnav-item-right" style={{
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                        marginLeft: "10px",
+                        marginRight: "50px"
+                    }}>
+                        <b className="topnav-a" style={{marginRight: "5px"}}>{textTimesWelcome + " " + userFirstName}</b>
+                        <b className="topnav-a" id="date-text" style={{marginRight: "5px"}}>{weekDay}</b>
+                        <b className="topnav-a" id="time-text" style={{marginRight: "5px"}}>{clock}</b>
+                        <b>{weatcherTemp} °C</b>
+                        {/*<b className="topnav-a">ИСП-239</b>*/}
                     </div>
                 </div>
             </header>

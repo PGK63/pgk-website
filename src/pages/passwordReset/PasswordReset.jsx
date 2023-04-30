@@ -14,7 +14,6 @@ const PasswordReset = () => {
     function sendEmailPasswordReset() {
 
         if(!isSuccessSendEmail && !isSendEmailLoading) {
-            console.log("11")
             setIsSendEmailLoading(true)
             setIsSuccessSendEmail(false)
             setErrorMessage("")
