@@ -92,8 +92,6 @@ const JournalTopicsPage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={modal} handleClose={() => setJournalTopicItem(undefined)}>
                 <div style={{
                     display: "flex",

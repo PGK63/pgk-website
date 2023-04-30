@@ -59,8 +59,6 @@ const AddRaportichkaRowPage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <div className="content">
                 <div style={{
                     display: "flex",

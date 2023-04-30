@@ -47,7 +47,6 @@ const JournalSubjectsPage = () => {
 
     return (
         <div>
-            <MainHeader/>
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>

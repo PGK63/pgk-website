@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import StudentService from '../../api/student/StudentService';
-import BaseButton from '../../components/BaseButton';
 import MainHeader from '../../components/mainHeader/MainHeader';
 import StudentItem from './components/StudentItem';
 import Loading from "../../components/Loading";
@@ -34,7 +33,6 @@ const StudentsPage = () => {
 
     return (
         <div>
-            <MainHeader/>
             <div className="content">
             <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Студенты (" + totalCount + ")"}</h1>

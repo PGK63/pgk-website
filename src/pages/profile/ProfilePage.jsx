@@ -43,7 +43,6 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <MainHeader/>
             <div className="content" style={{margin: "0 auto", textAlign: "center"}}>
                 <div className="profile-card" style={{marginTop: "30px"}}>
                     <img src={userIcon} style={{borderRadius: "10px", width: "300px"}}/>

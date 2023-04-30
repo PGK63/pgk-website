@@ -49,8 +49,6 @@ const SubjectsPage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <div style={{
                     display: "flex",

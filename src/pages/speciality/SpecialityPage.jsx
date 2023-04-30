@@ -36,7 +36,6 @@ const SpecialtiesPage = () => {
 
     return (
         <div>
-            <MainHeader/>
             <div className="content">
                 <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                     <h1 style={{fontWeight: "bold"}}>{"Специальности (" + totalCount + ")"}</h1>

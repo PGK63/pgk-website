@@ -54,8 +54,6 @@ const GroupDetailsPage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <div className="content">
                 { errorText != null &&
                     <ErrorText>{errorText}</ErrorText>

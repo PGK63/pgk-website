@@ -10,8 +10,6 @@ export default class AuthService {
             "password": password
         })
 
-        localStorage.setItem("user", JSON.stringify(response.data))
-
         return response
     }
 

@@ -114,8 +114,6 @@ const RaportichkaTable = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={showModal} handleClose={() => setRowItemId(null)} showButtonClose={false}>
                 <div style={{
                     display: "flex",

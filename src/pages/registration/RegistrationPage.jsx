@@ -108,8 +108,6 @@ function RegistrationPage() {
 
     return (
         <div>
-            <MainHeader/>
-
             <div style={{
                 marginLeft: "auto",
                 marginRight: "auto",

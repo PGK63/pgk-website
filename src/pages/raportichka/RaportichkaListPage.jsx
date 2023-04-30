@@ -54,8 +54,6 @@ const RaportichkaListPage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={modal} handleClose={() => setModal(false)}>
                 <div style={{
                     display: "flex",

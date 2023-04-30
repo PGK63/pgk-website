@@ -70,8 +70,6 @@ const GuidePaige = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={modalShow} handleClose={() => setModalShow(false)}>
                 <div style={{
                     margin: "0 auto",

@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import "./AuthPage.css";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../api/auth/AuthService";
+import {AuthContext} from "../../context";
+
 const AuthPage = () => {
+
     const navigate = useNavigate();
+    // const {user, setUser} = useContext(AuthContext);
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [password, setPassword] = useState("")
@@ -22,6 +26,8 @@ const AuthPage = () => {
                 setSpinnerBorderVisibility("hidden")
 
                 if(data.data.errorMessage === null){
+                    // setUser(data.data)
+                    localStorage.setItem("user", JSON.stringify(data.data))
                     navigate("/")
                 }else {
                     setErrorText(data.data.errorMessage)

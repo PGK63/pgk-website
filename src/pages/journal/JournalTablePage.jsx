@@ -165,8 +165,6 @@ const JournalTablePage = () => {
 
     return (
         <div>
-            <MainHeader/>
-
             <Modal show={modal} showButtonClose={false} handleClose={() => setJournalRowItem(null)}>
                 { journalRowItem &&
                     <div style={{
