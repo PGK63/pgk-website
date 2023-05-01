@@ -70,7 +70,7 @@ const ProfilePage = () => {
                     width: "50%",
                     display: "flex",
                     justifyContent: 'center',
-                    marginLeft: "-150px",
+                    marginLeft: "-5%",
                 }}>
                     <div className="input-group" style={{margin: "0 auto", textAlign: "center"}}>
                         <input

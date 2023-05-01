@@ -61,7 +61,7 @@ const RaportichkaListPage = () => {
                     width: "100%"
                 }}>
                     <div>
-                        <SearchBar
+                        <SearchBar hBar
                             placeholder="Введите номер группы..."
                             searchText={groupSearch}
                             handleFilter={(v) => {setGroupSearch(v)}}

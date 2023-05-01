@@ -125,10 +125,11 @@ const SubjectDetailsPage = () => {
                     <div style={{
                         display: "flex",
                         textAlign: "center",
-                        marginTop: "50px"
+                        marginTop: "50px",
+                        marginLeft: "70%"
                     }}>
                         <h3>{"Преподаватели" + " (" + totalCount + ")"}</h3>
-                        <BaseButton onClick={() => setModal(true)}>Добавить</BaseButton>
+                        <br/><BaseButton onClick={() => setModal(true)}>Добавить</BaseButton>
                     </div>
                 </div>
             }

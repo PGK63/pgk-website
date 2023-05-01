@@ -18,7 +18,7 @@ function SearchBar({searchText, placeholder, data, handleFilter, clearInput, ite
                 </div>
             </div>
             {dataResultVisibility && (
-                <div className="dataResult">
+                <div className="dataResult" style={{width:"100%"}}>
                     {data.slice(0, 50).map((value, key) => {
                         return <div>
                             {item(value)}
