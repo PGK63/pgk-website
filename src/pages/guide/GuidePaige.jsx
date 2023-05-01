@@ -10,6 +10,7 @@ import TeacherService from "../../api/teacher/TeacherService";
 import Modal from "../../components/modal/Modal";
 import {useNavigate} from "react-router-dom";
 import BaseConstants from "../../utils/BaseConstants";
+import CustomizedMenus from "./components/menu";
 
 const GuidePaige = (preps) => {
 
@@ -145,8 +146,11 @@ const GuidePaige = (preps) => {
         navigate(`/registration/${role}`)
     }
 
+
+
     return (
         <div>
+
             <Modal show={modalShow} handleClose={() => setModalShow(false)}>
                 <div style={{
                     margin: "0 auto",
@@ -182,9 +186,13 @@ const GuidePaige = (preps) => {
                 {search === undefined &&
                     <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                         <h1 style={{fontWeight: "bold"}}>{"Руководство (" + (direcotorTotalCount + teacherTotalCount + departmentHeadTotalCount) + ")"}</h1>
-                        <BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>
+                        <CustomizedMenus/>
+                        {/*<BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>*/}
                     </div>
                 }
+
+
+
 
                 {directorVisibility &&
                     <li style={{margin: "0 auto", textAlign: "center"}}>{

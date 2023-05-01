@@ -48,7 +48,11 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <div className="content" style={{margin: "0 auto", textAlign: "center"}}>
+            <div>
+
+
+
+
 
                 <div style={{
                     width: "100%",
@@ -56,16 +60,17 @@ const ProfilePage = () => {
                     justifyContent: 'center',
                     textAlign: "center"
                 }}>
-                    <div className="profile-card" style={{marginTop: "30px"}}>
-                        <img src={userIcon} style={{borderRadius: "10px", width: "300px"}}/>
-                        <h3 style={{margin: "10px"}}>{UserService.getFIOFull(user)}</h3>
+                    <div className="profile-card" style={{marginTop: "50px", marginLeft: "-60%" }}>
+                        <img src={userIcon} style={{borderRadius: "10px", width: "300px", left: "0"}}/>
+                        <h3 style={{margin: "20px"}}>{UserService.getFIOFull(user)}</h3>
                     </div>
                 </div>
 
                 <div style={{
-                    width: "100%",
+                    width: "50%",
                     display: "flex",
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    marginLeft: "-150px",
                 }}>
                     <div className="input-group" style={{margin: "0 auto", textAlign: "center"}}>
                         <input
@@ -81,25 +86,28 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
-
+                    {/*начало пзды*/}
                 <div style={{
                     marginTop: "80px",
                     width: "100%",
                     display: "flex",
                     justifyContent: 'center'
                 }}>
-                    <div style={{textAlign: "center"}}>
+                    <div style={{textAlign: "center", marginTop:"-350px", marginLeft:"50%"}}>
                         <h3>Безопасность</h3>
+                        <br/>
                         <BaseButton onClick={() => navigate("/settings/email")}>
                             <img src={emailState.icon} style={{width: "30px", height: "30px", marginRight: "10px"}}/>
                             {emailState.text}
                         </BaseButton>
+                        <br/>
                         <BaseButton onClick={() => navigate("/settings/telegram")}>
                             <img src={telegramState.icon} style={{width: "30px", height: "30px", marginRight: "10px"}}/>
                             {telegramState.text}
                         </BaseButton>
                     </div>
                 </div>
+                {/*КОНЕЦ ПИЗДЫ*/}
             </div>
         </div>
     );
