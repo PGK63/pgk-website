@@ -121,13 +121,31 @@ const SubjectsPage = (preps) => {
 
             </Modal>
 
+            {/*<div className="content">*/}
+            {/*    { search === undefined &&*/}
+            {/*        <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>*/}
+            {/*           <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>*/}
+            {/*            <BaseButton onClick={() => setShowModal(true)}>Добавить</BaseButton>*/}
+            {/*        </div>*/}
+            {/*    }*/}
             <div className="content">
-                { search === undefined &&
-                    <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
-                        <h1 style={{fontWeight: "bold"}}>{"Предметы (" + totalCount + ")"}</h1>
+                {search === undefined && (
+                    <div
+                        style={{
+                            margin: "30px",
+                            alignItems: "center",
+                            display: "flex",
+                            justifyContent: "space-between"
+                        }}
+                    >
+                        <h1 style={{ fontWeight: "bold", textAlign: "center", flex: "1" }}>
+                            {"Предметы (" + totalCount + ")"}
+                        </h1>
                         <BaseButton onClick={() => setShowModal(true)}>Добавить</BaseButton>
+
                     </div>
-                }
+                )}
+            </div>
 
                 {subjectsError &&
                     <ErrorText>{"Произошла ошибка \n " + subjectsError}</ErrorText>
@@ -150,7 +168,7 @@ const SubjectsPage = (preps) => {
 
                 <div ref={lastElement} style={{height: 20}}/>
             </div>
-        </div>
+
     );
 };
 

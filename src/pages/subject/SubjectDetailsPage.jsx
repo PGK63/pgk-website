@@ -14,6 +14,14 @@ import GroupService from "../../api/group/GroupService";
 import {HistoryType} from "../../api/user/model/HistoryType";
 import Modal from "../../components/modal/Modal";
 import SearchBar from "../../components/searchBar/SearchBar";
+import MainMenu from "../../components/menu/MainMenu";
+import MenuItem from "@mui/material/MenuItem";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
+
 
 const SubjectDetailsPage = () => {
     
@@ -25,7 +33,8 @@ const SubjectDetailsPage = () => {
     const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const lastElement = useRef()
-    const [modal, setModal] = useState(false)
+    const [addSubjectModal, setAddSubjectModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
     const [teacherSearch, setTeacherSearch] = useState("")
     const [teacher, setTeacher] = useState(null)
     const [teachersAll, setTeachersAll] = useState([])
@@ -81,7 +90,7 @@ const SubjectDetailsPage = () => {
     return (
         <div className="content">
 
-            <Modal show={modal} handleClose={() => setModal(false)}>
+            <Modal show={addSubjectModal} handleClose={() => setAddSubjectModal(false)}>
                 <SearchBar
                     placeholder="Введите имя преподавателя..."
                     searchText={teacherSearch}
@@ -111,25 +120,96 @@ const SubjectDetailsPage = () => {
                 </div>
             </Modal>
 
+            <Modal show={deleteModal} handleClose={() => setDeleteModal(false)} >
+
+
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+
+                }
+
+
+                }>
+                    <div style={{textAlign:"center"}}>
+                        <h1 style={{marginTop: "35px", marginBottom: "20px"}}>Вы уверены?</h1>
+
+
+
+
+                        <h4>Отменить действие будет нельзя</h4>
+                        <h4>Действие удалит также все оценки и поля в рапортичках где присутствует этот предмет</h4>
+
+
+                        <div style={{marginTop: "10px"}}>
+                            <button  style={{
+                                backgroundColor: "#b81414",
+                                border: "none",
+                                padding: "10px 130px",
+                                color: "#ffffff",
+                                fontSize: "1.05rem",
+                                margin: "10px",
+                                borderRadius: "15px",
+                                cursor: "pointer",
+                                textDecoration: "none"
+
+
+                            }}>Удалить</button>
+                        </div>
+                    </div>
+                </div>
+
+            </Modal>
+
             { subject !== null &&
                 <div>
                     <div style={{
                         width: "100%",
-                        justifyContent: "center",
+                        justifyContent: "space-between",
                         textAlign: "center",
                         display: "flex",
-                        marginTop: "30px"
+                        marginTop: "30px",
+                        verticalAlign:"middle",
                     }}>
-                        <h1>{subject.subjectTitle}</h1>
+                        <h1 style={{marginLeft:"50%"}}>{subject.subjectTitle}</h1>
+                       <div style={{marginRight:"3%",scale:"120%"}}> <br/><MainMenu content={(handleClose) => {
+                            return <div>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    setAddSubjectModal(true)
+                                }} disableRipple>
+                                    <PersonAddAlt1Icon />
+                                    Добавить преподователя к предмету
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                }} disableRipple>
+                                    <SettingsSuggestIcon />
+                                    Изменить название предмета
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    setDeleteModal(true)
+                                }} disableRipple>
+                                    <DeleteForeverIcon />
+                                    Удалить
+                                </MenuItem>
+                            </div>
+                        }}/></div>
                     </div>
                     <div style={{
                         display: "flex",
                         textAlign: "center",
                         marginTop: "50px",
-                        marginLeft: "70%"
+                       width: "100%",
+                        justifyContent: "center"
                     }}>
                         <h3>{"Преподаватели" + " (" + totalCount + ")"}</h3>
-                        <br/><BaseButton onClick={() => setModal(true)}>Добавить</BaseButton>
                     </div>
                 </div>
             }
