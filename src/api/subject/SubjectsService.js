@@ -25,6 +25,16 @@ export default class SubjectsService {
         return response.data
     }
 
+    static async getById(id) {
+        const response = await axios.get(`https://api.cfif31.ru/pgk63/api/Subject/${id}`, {
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
+
+        return response.data
+    }
+
     static async create(subjectTitle) {
 
         const data = JSON.stringify({

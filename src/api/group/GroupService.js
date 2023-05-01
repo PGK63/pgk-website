@@ -56,6 +56,14 @@ export default class GroupService {
         return response.data
     }
 
+    static async updateCourse(groupId, course) {
+        return await axios.patch(`https://api.cfif31.ru/pgk63/api/Group/${groupId}/Course`, null, {
+            params: {
+                course: course
+            }
+        })
+    }
+
     static getName(group) {
         return group.speciality.nameAbbreviation + "-" + group.course + group.number
     }

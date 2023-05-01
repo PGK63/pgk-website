@@ -29,6 +29,7 @@ const AuthPage = () => {
                     // setUser(data.data)
                     localStorage.setItem("user", JSON.stringify(data.data))
                     navigate("/")
+                    window.location.reload()
                 }else {
                     setErrorText(data.data.errorMessage)
                 }

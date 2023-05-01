@@ -10,8 +10,11 @@ import SubjectsService from "../../api/subject/SubjectsService";
 import Modal from "../../components/modal/Modal";
 import BaseConstants from "../../utils/BaseConstants";
 import EmptyListUi from "../../components/EmptyListUi";
+import {useNavigate} from "react-router-dom";
 
 const SubjectsPage = (preps) => {
+    const navigate = useNavigate()
+
     const [subjects, setSubjects] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
@@ -140,7 +143,7 @@ const SubjectsPage = (preps) => {
                 <li style={{margin: "0 auto", textAlign: "center"}}>{
                     subjects.map(subject =>
                         <ul style={{display: "inline-block", verticalAlign: "top", margin: "5px"}}>
-                            <SubjectItem subject={subject}/>
+                            <SubjectItem subject={subject} onClick={() => navigate(`/subjects/${subject.id}`)}/>
                         </ul>
                     )
                 }</li>

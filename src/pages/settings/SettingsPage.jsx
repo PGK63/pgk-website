@@ -10,6 +10,7 @@ const SettingsPage = () => {
     function signOut() {
         localStorage.setItem("user", null)
         navigate("/auth")
+        window.location.reload()
     }
 
     return (

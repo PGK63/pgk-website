@@ -4,12 +4,13 @@ import AuthService from "../auth/AuthService";
 
 export default class TeacherService {
 
-    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE, search = null) {
+    static async getAll(pageNumber = 1, pageSize = BaseConstants.PAGE_SIZE, search = null, subjectIds) {
         const response = await axios.get("https://api.cfif31.ru/pgk63/api/Teacher", {
             params: {
                 "pageSize": pageSize,
                 "pageNumber": pageNumber,
-                "search": search
+                "search": search,
+                "subjectIds" :subjectIds
             },
             headers: {
                 "Authorization": "Bearer " + await AuthService.getToken()
@@ -34,6 +35,17 @@ export default class TeacherService {
         })
 
         return response.data
+    }
+
+    static async addSubject(teacherId, subjectId) {
+        return await axios.post(`https://api.cfif31.ru/pgk63/api/Teacher/${teacherId}/Subject`, null, {
+            params: {
+                subjectId: Number(subjectId)
+            },
+            headers: {
+                "Authorization": "Bearer " + await AuthService.getToken()
+            }
+        })
     }
 
     static getName(teacher) {

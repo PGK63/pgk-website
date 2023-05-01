@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import MainHeader from "../../components/mainHeader/MainHeader";
 import {useNavigate, useParams} from "react-router-dom";
 import GroupService from "../../api/group/GroupService";
 import Loading from "../../components/Loading";
@@ -13,6 +12,9 @@ import UserService from "../../api/user/UserService";
 import {UserRole} from "../../api/user/model/UserRole";
 import HeadmanService from "../../api/headman/HeadmanService";
 import {HistoryType} from "../../api/user/model/HistoryType";
+import Modal from "../../components/modal/Modal";
+import EvaluationItem from "../journal/components/EvaluationItem";
+import Groupmenu from "./components/Gmenu";
 
 const GroupDetailsPage = () => {
 
@@ -21,6 +23,8 @@ const GroupDetailsPage = () => {
     const [group, setGroup] = useState()
     const [errorText, setErrorText] = useState()
     const [user, setUser] = useState(null)
+    const [modal, setModal] = useState(false)
+    const [course, setCourse] = useState(0)
 
     useEffect(() => {
         getGroupsDetails()
@@ -32,7 +36,6 @@ const GroupDetailsPage = () => {
 
     useEffect(() => {
         if(group !== null && group !== undefined){
-            console.log(group)
             UserService.postHistoryItem(
                 groupId,
                 GroupService.getName(group),
@@ -58,52 +61,77 @@ const GroupDetailsPage = () => {
 
     async function getGroupsDetails() {
         try {
-            setErrorText("")
+            setErrorText(null)
             const response = await GroupService.getById(groupId)
             setGroup(response)
+            setCourse(response.course)
         }catch (e) {
             setErrorText(e.message)
         }
     }
 
+    function updateCourse() {
+        GroupService.updateCourse(groupId, course).then((r) => {
+            setModal(false)
+            getGroupsDetails()
+        })
+    }
+
     return (
         <div>
             <div className="content">
+
+                <Modal show={modal} handleClose={() => setModal(false)}>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: "center",
+                        width: "100%",
+                        textAlign: "center"
+                    }}>
+                        <div>
+                            <h1 style={{marginBottom: "15px"}}>Изменить курс</h1>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: "center",
+                                width: "100%"
+                            }}>
+                                {[1, 2, 3, 4, 5].map(i =>
+                                    <EvaluationItem elevation={i} color={
+                                        course === i ? "#205798" : "#919090"
+                                    } onClick={() => setCourse(i)}/>
+                                )}
+                            </div>
+                            <BaseButton onClick={updateCourse}>Обновить</BaseButton>
+                        </div>
+                    </div>
+                </Modal>
+
                 { errorText != null &&
                     <ErrorText>{errorText}</ErrorText>
                 }
                 { group != null &&
                     <div>
                         <GroupNameContainer group={group}/>
-                        <div className="card" style={{marginLeft: "50px", marginRight: "50px"}}>
-                            <div className="group-add-buttons" style={{
-                                display: 'flex',
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <b style={{fontSize:"25px", margin: "10px"}}>Добавить</b>
-                                <BaseButton onClick={() => navigate("/registration/student?groupId=" + groupId)}>Студент</BaseButton>
-                                <BaseButton onClick={() => navigate("/registration/headman?groupId=" + groupId)}>Староста</BaseButton>
-                                <BaseButton onClick={() => navigate("/registration/headmanDeputy?groupId=" + groupId)}>Зам Староста</BaseButton>
-                            </div>
-                        </div>
-
-                        <div className="card" style={{marginTop: "10px", marginLeft: "50px", marginRight: "50px"}}>
-                            <div className="group-other-buttons" style={{
-                                display: 'flex',
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <BaseButton>Изменить курс</BaseButton>
-                                <BaseButton onClick={() => navigate(`/groups/${groupId}/journal/create`)}>Добавить журнал</BaseButton>
-                                <BaseButton onClick={createRaportichka}>Создать рапортичку</BaseButton>
-                            </div>
-                        </div>
+                        <div style={{marginLeft:"90%", scale:"150%"}}>
+                            <Groupmenu/></div>
                         <div style={{alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                             <GroupClassroomTeacherContainer classroomTeacher={group.classroomTeacher}/>
                             <SpecialityItem speciality={group.speciality}/>
                         </div>
                         <GroupStudents groupId={groupId}/>
+
+                        {/*<div className="card" style={{marginLeft: "50px", marginRight: "50px"}}>*/}
+                        {/*    <div className="group-add-buttons" style={{*/}
+                        {/*        display: 'flex',*/}
+                        {/*        alignItems: "center",*/}
+                        {/*        justifyContent: "center"*/}
+                        {/*    }}>*/}
+                        {/*        <b style={{fontSize:"25px", margin: "10px"}}>Добавить</b>*/}
+                        {/*        <BaseButton onClick={() => navigate("/registration/student?groupId=" + groupId)}>Студент</BaseButton>*/}
+                        {/*        <BaseButton onClick={() => navigate("/registration/headman?groupId=" + groupId)}>Староста</BaseButton>*/}
+                        {/*        <BaseButton onClick={() => navigate("/registration/headmanDeputy?groupId=" + groupId)}>Зам Староста</BaseButton>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 }
                 { errorText === null && group === null &&
