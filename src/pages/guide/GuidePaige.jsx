@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import MainHeader from "../../components/mainHeader/MainHeader";
 import {useFetching} from "../../hooks/useFetching";
 import {useObserver} from "../../hooks/useObserver";
-import BaseButton from "../../components/BaseButton";
 import GuideItem from "./components/GuideItem";
 import DirectorService from "../../api/director/DirectorService";
 import DepartmentHeadService from "../../api/departmentHead/DepartmentHeadService";
 import TeacherService from "../../api/teacher/TeacherService";
-import Modal from "../../components/modal/Modal";
 import {useNavigate} from "react-router-dom";
 import BaseConstants from "../../utils/BaseConstants";
-import CustomizedMenus from "./components/menu";
+import MainMenu from "../../components/menu/MainMenu";
+import MenuItem from "@mui/material/MenuItem";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
 const GuidePaige = (preps) => {
 
@@ -26,7 +26,6 @@ const GuidePaige = (preps) => {
     const [teacherTotalCount, setTecherTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const lastElement = useRef()
-    const [modalShow, setModalShow] = useState(false)
     const directorVisibility = preps.directorVisibility === undefined ? true : preps.directorVisibility
     const teacherVisibility = preps.teacherVisibility === undefined ? true : preps.teacherVisibility
     const departmentHeadVisibility = preps.departmentHeadVisibility === undefined ? true : preps.departmentHeadVisibility
@@ -146,53 +145,50 @@ const GuidePaige = (preps) => {
         navigate(`/registration/${role}`)
     }
 
-
-
     return (
         <div>
-
-            <Modal show={modalShow} handleClose={() => setModalShow(false)}>
-                <div style={{
-                    margin: "0 auto",
-                    textAlign: "center",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    width: "100%"
-                }}>
-                    <h2 style={{
-                        margin: "15px",
-                        fontWeight: "bold"
-                    }}>Добавить</h2>
-
-                    <BaseButton onClick={() => registration("director")}>
-                        Директора
-                    </BaseButton>
-
-                    <BaseButton onClick={() => registration("department_head")}>
-                        Заведующего отделения
-                    </BaseButton>
-
-                    <BaseButton onClick={() => registration("teacher")}>
-                        Преподавателя
-                    </BaseButton>
-
-                    <BaseButton onClick={() => registration("educational_sector")}>
-                        Учебный сектор
-                    </BaseButton>
-                </div>
-            </Modal>
-
             <div className="content">
                 {search === undefined &&
                     <div style={{margin: "30px", alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                         <h1 style={{fontWeight: "bold"}}>{"Руководство (" + (direcotorTotalCount + teacherTotalCount + departmentHeadTotalCount) + ")"}</h1>
-                        <CustomizedMenus/>
-                        {/*<BaseButton onClick={() => setModalShow(true)}>Добавить</BaseButton>*/}
+                        <MainMenu content={(handleClose) => {
+                            return <div>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    registration("director")
+                                }} disableRipple>
+                                    <PersonAddAlt1Icon />
+                                    Добавить директора
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    registration("department_head")
+                                }} disableRipple>
+                                    <PersonAddAltIcon />
+                                    Добавить зав. отделения
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    registration("educational_sector")}
+                                } disableRipple>
+                                    <PersonAddAltIcon />
+                                    Добавить учебный сектор
+                                </MenuItem>
+
+                                <MenuItem onClick={() => {
+                                    handleClose()
+                                    registration("teacher")
+                                }} disableRipple>
+                                    <PersonAddAltIcon />
+                                    Добавить преподователя
+                                </MenuItem>
+                            </div>
+                        }}/>
                     </div>
                 }
-
-
-
 
                 {directorVisibility &&
                     <li style={{margin: "0 auto", textAlign: "center"}}>{
