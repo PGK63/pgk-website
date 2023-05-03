@@ -11,6 +11,10 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import {UserRole} from "../../../api/user/model/UserRole";
+import HeadmanService from "../../../api/headman/HeadmanService";
+import GroupService from "../../../api/group/GroupService";
+
 const StyledMenu = styled((props) => (
     <Menu
         elevation={0}
@@ -52,6 +56,7 @@ const StyledMenu = styled((props) => (
     },
 }));
 
+
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -89,7 +94,7 @@ export default function CustomizedMenus() {
                     <PersonAddAlt1Icon />
                     Добавить старосту
                 </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
+                <MenuItem onClick={() => navigate("/registration/student?groupId=" + groupId)} disableRipple>
                     <PersonAddAltIcon />
                     Добавить зам. старосту
                 </MenuItem>

@@ -14,7 +14,16 @@ import HeadmanService from "../../api/headman/HeadmanService";
 import {HistoryType} from "../../api/user/model/HistoryType";
 import Modal from "../../components/modal/Modal";
 import EvaluationItem from "../journal/components/EvaluationItem";
-import Groupmenu from "./components/Gmenu";
+import MenuItem from "@mui/material/MenuItem";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import MainMenu from "../../components/menu/MainMenu";
+import Divider from "@mui/material/Divider";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import AddCardIcon from "@mui/icons-material/AddCard";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 const GroupDetailsPage = () => {
 
@@ -113,7 +122,51 @@ const GroupDetailsPage = () => {
                     <div>
                         <GroupNameContainer group={group}/>
                         <div style={{marginLeft:"90%", scale:"150%"}}>
-                            <Groupmenu/></div>
+                            <MainMenu content={(handleClose) => {
+                                return <div>
+                                    <MenuItem  onClick={() => navigate("/registration/headman?groupId=" + groupId)} disableRipple>
+                                        <PersonAddAlt1Icon />
+                                        Добавить старосту
+                                    </MenuItem>
+                                    <MenuItem onClick={() => navigate("/registration/headmanDeputy?groupId=" + groupId)} disableRipple>
+                                        <PersonAddAltIcon />
+                                        Добавить зам. старосту
+                                    </MenuItem>
+                                    <MenuItem onClick={() => {
+                                        handleClose()
+                                        navigate("/registration/student?groupId=" + groupId)
+                                    }} disableRipple>
+                                        <PersonAddAltIcon />
+                                        Добавить студента
+                                    </MenuItem>
+
+                                    <MenuItem onClick={() => {
+                                        navigate(`/groups/${groupId}/journal/create`)
+                                        handleClose()
+                                    }} disableRipple>
+                                        <AddBoxIcon />
+                                        Добавить журнал
+                                    </MenuItem>
+                                    <MenuItem onClick={ ()=>createRaportichka()} disableRipple>
+                                        <AddCardIcon />
+                                        Создать рапортичку
+                                    </MenuItem>
+                                    <MenuItem onClick={() => setModal(true)} handleClose disableRipple>
+                                        <SettingsSuggestIcon />
+                                        Изменить курс
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <ManageAccountsIcon/>
+                                        Изменить куратора
+                                    </MenuItem>
+                                        <MenuItem>
+                                            <FileDownloadIcon/>
+                                            Скачать ведомость за месяц
+                                        </MenuItem>
+
+                                </div>
+                            }}/>
+                        </div>
                         <div style={{alignItems: "center", display: "flex", justifyContent: "space-around"}}>
                             <GroupClassroomTeacherContainer classroomTeacher={group.classroomTeacher}/>
                             <SpecialityItem speciality={group.speciality}/>
@@ -127,8 +180,8 @@ const GroupDetailsPage = () => {
                         {/*        justifyContent: "center"*/}
                         {/*    }}>*/}
                         {/*        <b style={{fontSize:"25px", margin: "10px"}}>Добавить</b>*/}
-                        {/*        <BaseButton onClick={() => navigate("/registration/student?groupId=" + groupId)}>Студент</BaseButton>*/}
-                        {/*        <BaseButton onClick={() => navigate("/registration/headman?groupId=" + groupId)}>Староста</BaseButton>*/}
+                        {/*        <BaseButton onClick={() => }>Студент</BaseButton>*/}
+                        {/*        <BaseButton onClick={() => navigate("/registration }>Староста</BaseButton>*/}
                         {/*        <BaseButton onClick={() => navigate("/registration/headmanDeputy?groupId=" + groupId)}>Зам Староста</BaseButton>*/}
                         {/*    </div>*/}
                         {/*</div>*/}

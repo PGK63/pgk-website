@@ -17,6 +17,8 @@ const RaportichkaTable = () => {
     const [showModal, setShowModal] = useState(false)
     const [rowItemId, setRowItemId] = useState(null)
     const [groupId, setGroupId] = useState(0)
+    const [deleteModal, setDeleteModal] = useState(false)
+
 
     useEffect(() => {
         if(rowItemId !== null){
@@ -114,6 +116,37 @@ const RaportichkaTable = () => {
 
     return (
         <div>
+
+            <Modal show={deleteModal} handleClose={() => setDeleteModal(false)} >
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",}}>
+                    <div style={{textAlign:"center"}}>
+                        <h1 style={{marginTop: "35px", marginBottom: "20px"}}>Вы уверены?</h1>
+
+                        <h4>Отменить действие будет нельзя</h4>
+                        <h4>Действие удалит также все оценки и поля в рапортичках где присутствует этот предмет</h4>
+
+                        <div style={{marginTop: "10px"}}>
+                            <button  style={{
+                                backgroundColor: "#b81414",
+                                border: "none",
+                                padding: "10px 130px",
+                                color: "#ffffff",
+                                fontSize: "1.05rem",
+                                margin: "10px",
+                                borderRadius: "15px",
+                                cursor: "pointer",
+                                textDecoration: "none"
+                            }}>Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+
+
             <Modal show={showModal} handleClose={() => setRowItemId(null)} showButtonClose={false}>
                 <div style={{
                     display: "flex",
@@ -166,6 +199,19 @@ const RaportichkaTable = () => {
                     })}
                     </tbody>
                 </table>
+                <button style={{  backgroundColor: "#205798",
+                    border: "none",
+                    padding: "10px 130px",
+                    color: "#ffffff",
+                    fontSize: "1.05rem",
+                    margin: "10px",
+                    borderRadius: "15px",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    display:"flex",
+                    marginLeft:"70%",
+                    marginTop:"-5%"
+                }} onClick={() => setDeleteModal(true)}>Создать ведомость</button>
             </div>
         </div>
     );
