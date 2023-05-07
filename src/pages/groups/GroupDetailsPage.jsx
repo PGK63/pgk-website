@@ -18,12 +18,17 @@ import MenuItem from "@mui/material/MenuItem";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import MainMenu from "../../components/menu/MainMenu";
-import Divider from "@mui/material/Divider";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import dayjs from "dayjs";
+import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import {getMonthNetworkValue} from "../../utils/DateExtensions";
+
 
 const GroupDetailsPage = () => {
 
@@ -33,7 +38,10 @@ const GroupDetailsPage = () => {
     const [errorText, setErrorText] = useState()
     const [user, setUser] = useState(null)
     const [modal, setModal] = useState(false)
+    const [modal2, setModal2] = useState(false)
     const [course, setCourse] = useState(0)
+    const [date, setDate] = useState(dayjs('2022-04-17'))
+    
 
     useEffect(() => {
         getGroupsDetails()
@@ -89,6 +97,29 @@ const GroupDetailsPage = () => {
     return (
         <div>
             <div className="content">
+                <Modal show={modal2} handleClose={() => setModal2(false)}>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: "center",
+                        width: "100%",
+                        textAlign: "center"
+                    }}>
+                        <div>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+
+                                    <DatePicker
+                                        label={'"month" and "year"'}
+                                        views={['month', 'year']}
+                                        value={date}
+                                        onChange={(newValue) => setDate(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                            <BaseButton onClick={()=> window.open (`https://api.cfif31.ru/pgk63/api/Group/${groupId}/Vedomost/Attendance?year=${date.year()}&month=${getMonthNetworkValue(date.month() + 1)}`)}> Скачать ведомость </BaseButton>
+                        </div>
+                    </div>
+                </Modal>
 
                 <Modal show={modal} handleClose={() => setModal(false)}>
                     <div style={{
@@ -159,7 +190,7 @@ const GroupDetailsPage = () => {
                                         <ManageAccountsIcon/>
                                         Изменить куратора
                                     </MenuItem>
-                                        <MenuItem>
+                                        <MenuItem onClick={() => setModal2(true)} handleClose disableRipple>
                                             <FileDownloadIcon/>
                                             Скачать ведомость за месяц
                                         </MenuItem>

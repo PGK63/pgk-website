@@ -25,6 +25,14 @@ export function getMonthValue(monthNumber) {
     return month[monthNumber]
 }
 
+export function getMonthNetworkValue(monthNumber) {
+    const month = [
+        "NotSet", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    ];
+
+    return month[monthNumber]
+}
+
 export function times() {
     const currentHour= new Date().getHours();
 
