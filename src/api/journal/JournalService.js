@@ -101,6 +101,7 @@ export default class JournalService {
             }
         })
 
+        console.log(response)
         return response.data
     }
 

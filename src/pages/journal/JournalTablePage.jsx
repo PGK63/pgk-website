@@ -148,13 +148,15 @@ const JournalTablePage = () => {
 
     function addColumn(studentId, columnDate, rowId) {
 
+        console.log(rowId)
+
         JournalService.addColumn(
             studentId,
             journalSubjectId,
             evaluation,
             columnDate,
             rowId
-        ).then(() => {
+        ).then((r) => {
             setJournalRowItem(null)
 
             JournalService.getRowAll(journalSubjectId).then(r => {
@@ -270,7 +272,8 @@ const JournalTablePage = () => {
                                             setJournalRowItem({
                                                 type: "add_row_date",
                                                 student: cell.row.original.student,
-                                                evaluation: "0"
+                                                evaluation: "0",
+                                                columnId: cell.row.original.rowId
                                             })
                                         }else if(cell.value === undefined) {
                                             setEvaluation("0")
